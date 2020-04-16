@@ -56,24 +56,30 @@
 		text-decoration: underline;
 	}
 </style>
-<div class="login-form">
-{% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
-    <form action="{% url 'login' %}" method="post">
-     {% csrf_token %}
-        <h2 class="text-center">Login</h2>   
-        <div class="form-group has-error">
-        	<input type="text" class="form-control" name="username" value="{{username}}"placeholder="Username" required="required">
+<div class="container ">
+    <div class="row mt-5">
+        <div class="col ">
+            <div class="login-form ">
+            {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
+                <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                    <h2 class="text-center">Login</h2>   
+                    <div class="form-group has-error">
+                        <input type="text" class="form-control" name="username" value="{{username}}"placeholder="Username" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" value="{{password}}" placeholder="Password" required="required">
+                    </div>        
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                    </div>
+                    <p><a href="#">Forgot your Password?</a></p>
+                <input type="hidden" name="next_url" value="{{ next_url}}"/>
+                </form>
+                <p class="text-center small">Don't have an account? <a href="{% url 'register' %}" style="color: #7a7a7a;">Sign Up here!</a></p>
+            </div>
         </div>
-		<div class="form-group">
-            <input type="password" class="form-control" name="password" value="{{password}}" placeholder="Password" required="required">
-        </div>        
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-        </div>
-        <p><a href="#">Forgot your Password?</a></p>
-    <input type="hidden" name="next_url" value="{{ next_url}}"/>
-    </form>
-    <p class="text-center small">Don't have an account? <a href="{% url 'register' %}" style="color: #7a7a7a;">Sign Up here!</a></p>
+    </div>
 </div>
 </body>
 </html>                            

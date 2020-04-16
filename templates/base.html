@@ -36,6 +36,12 @@
             -o-background-size: cover;
             background-size: cover;
         }
+        .navbar-brand {
+          color: #fff !important; 
+        }
+        .navbar-brand:hover, .navbar-brand:focus {
+        color: yellow  !important;
+        }
     </style>
 </head>
 
@@ -43,25 +49,25 @@
 
 
          
-    <nav class="navbar navbar-expand-lg navbar-light  " style="background-color:#F2793C; width: 100%; ">
-        <a class="navbar-brand" href="{% url 'index' %}" style="color: white;">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color:#F2793C; width: 100%; ">
+        <a class="navbar-brand " href="{% url 'index' %}" style="color: white;">
          Home
         </a>
         <button class="navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
           aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon" ></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown" >
+        <div class="collapse navbar-collapse"  id="navbarNavDropdown" >
           <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item mypage align-self-center">
                         <h5 class="my-auto text-success">User: {{request.user.username}}</h5>
                     </li>
-                      <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-dark mx-5">Logout</button>
+                      <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-light mx-5">Logout</button>
                     {% else %}
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button onclick="window.location.href = {% url 'login' %}" class="btn btn-outline-dark my-2 my-sm-0">Login</button>
-                      <button onclick="window.location.href = {% url 'register' %}" class="btn btn-outline-dark my-2 my-sm-0">Sign Up</button>
+                      <button onclick="window.location.href = {% url 'login' %}" class="btn btn-outline-light my-2 my-sm-0">Login</button>
+                      <button onclick="window.location.href = {% url 'register' %}" class="btn btn-outline-light my-2 my-sm-0">Sign Up</button>
                     </div>
                     {% comment %} <li class="nav-item mypage align-self-center">
                     <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
