@@ -51,6 +51,11 @@ def my_register(request):
     }
     return render(request, 'authen/register.html', context)
 
+def register_med(request):
+    context = {}
+    return render(request, 'authen/register_medicalpersonnel.html', context)
+
+
 def change_password(request):
     context = {}
     return render(request, 'authen/changepassword.html', context)
