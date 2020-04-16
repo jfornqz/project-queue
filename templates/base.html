@@ -55,13 +55,24 @@
           <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item mypage align-self-center">
-                        <p class="my-auto text-success">User: {{request.user.username}}</p>
+                        <h5 class="my-auto text-success">User: {{request.user.username}}</h5>
                     </li>
-                    <li class="nav-item mypage align-self-center">
-                    <a class="nav-link" href="{% url 'logout' %}">
-                        <button class="btn btn-outline-dark my-2 my-sm-0" type="">Logout</button>
+                      <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-dark mx-5">Logout</button>
+                    {% else %}
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button onclick="window.location.href = {% url 'login' %}" class="btn btn-outline-dark my-2 my-sm-0">Login</button>
+                      <button onclick="window.location.href = {% url 'register' %}" class="btn btn-outline-dark my-2 my-sm-0">Sign Up</button>
+                    </div>
+                    {% comment %} <li class="nav-item mypage align-self-center">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
+                    <a class="nav-link" href="{% url 'login' %}">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="">Login</button>
                     </a>
-                    </li>
+                    <a class="nav-link" href="{% url 'register' %}">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="">Register</button>
+                    </a>
+                    </div>
+                    </li> {% endcomment %}
                     {% endif %}
                 </ul> 
           {% comment %} <ul class="nav ml-auto">
