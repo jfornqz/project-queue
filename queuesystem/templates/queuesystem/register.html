@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container ">
+
+
+    <div class="row">
+        <div class="col ">
+            <form action="{% url 'register' %}" class="text-center  border border-light p-5" method="POST">
+                {% csrf_token %}
+                <h3 class="text-center mb-5">Sign Up</h3>
+                {% if error %}<p class="text-danger text-center">{{ error }}</p>{% endif %}
+                <div class="form-holder mb-2">
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto " placeholder="Username" name="username" required>
+                </div>
+                <div class="form-holder mb-2  d-block " >
+                    <div class=" col-sm-6 d-block mx-auto"> 
+                        <select class="custom-select required d-block  mx-auto "  name="select-name-titles" style="width:88%" required>
+                            <option selected>---- กรุณาเลือกคำนำหน้าชื่อ / Select Name Titles ----</option>
+                            <option value="1">นางสาว / Miss</option>
+                            <option value="2">นาย / Mr.</option>
+                            <option value="3">นาง / Mrs.</option>
+                            <option value="3">ด.ญ</option>
+                            <option value="3">ด.ช </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-holder mb-2">
+                   
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="First Name"  name="first_name" required>
+                </div>
+                <div class="form-holder mb-2">
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="Last Name"  name="last_name" required>
+                </div>
+                <div class="form-holder mb-2">
+                    <input class="form-control required col-lg-5 d-block mx-auto" placeholder="Date of Birth" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+                </div>
+               
+                <div class="form-holder mb-2">
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="Age"  name="age" required>
+                </div>
+
+                 <div class="form-holder mb-2  d-block " >
+                    <div class=" col-sm-6 d-block mx-auto "> 
+                        <select class="custom-select required d-block mx-auto " style="width:88%" name="select-name-titles" required>
+                            <option selected>---- กรุณาเลือกเพศ / Select Gender ----</option>
+                            <option value="1">ชาย / Male</option>
+                            <option value="2">หญิง / Female</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-holder mb-2">
+                    <textarea class="form-control col-lg-5 d-block mx-auto" rows="3" placeholder="Address" name="address" required></textarea>
+                    <small>ตัวอย่าง: 17/4 ซอยฉลองกรุง1 เขตลาดกระบัง แขวงลาดกระบัง จังหวัดกรุงเทพมหานคร 10520</small>
+                </div>
+
+                <div class="form-holder mb-2">
+
+                    <input type="text" class="form-control required  col-lg-5 d-block mx-auto"placeholder="E-mail" name="email" required>
+                </div>
+
+                <div class="form-holder mb-2">
+
+                    <input type="text" class="form-control required  col-lg-5 d-block mx-auto"placeholder="Phone Number" name="phone" required>
+                </div>
+
+
+                <div class="form-holder mb-2">
+
+                    <input type="password" class="form-control required  col-lg-5 d-block mx-auto" placeholder="Password" name="password1"
+                        required>
+                </div>
+                <div class="form-holder mb-2">
+
+                    <input type="password" class="form-control required  col-lg-5 d-block mx-auto" placeholder="Confirm Password" name="password2"
+                        required>
+                </div>
+
+
+                <div class="my-4"><button type="submit" class="btn btn-success text-center">Register</button>
+                </div>
+
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
