@@ -52,14 +52,26 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown" >
-          <ul class="nav ml-auto">
+          <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item mypage align-self-center">
+                        <p class="my-auto text-success">User: {{request.user.username}}</p>
+                    </li>
+                    <li class="nav-item mypage align-self-center">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="">Logout</button>
+                    </a>
+                    </li>
+                    {% endif %}
+                </ul> 
+          {% comment %} <ul class="nav ml-auto">
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}"  style="font-size: 1.2em;">Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}"  style="font-size: 1.2em;">Sign Up</a>
             </li>
-          </ul>
+          </ul> {% endcomment %}
         </div>
       </nav>
 

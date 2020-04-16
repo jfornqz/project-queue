@@ -1,19 +1,8 @@
-from django.shortcuts import render
-import random
-from builtins import id, object
-from fnmatch import filter
-from os.path import isdir
-from re import search
-from urllib import response
+import email
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.admin import UserCreationForm
-from django.contrib.auth.decorators import login_required, permission_required
-from django.forms import formset_factory
-from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from django.template.context_processors import request
-
 
 
 
@@ -23,15 +12,49 @@ def index(request):
     return render(request, 'queuesystem/index.html', context)
 
 def my_login(request):
+    logout(request)
     context = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user: 
+            login(request, user)
+            return redirect('index')
+        else:
+            context['error'] = 'Username หรือ Password ไม่ถูกต้อง!'
     return render(request, 'queuesystem/login.html', context)
 
 def my_logout(request):
-    context = {}
-    return render(request, 'queuesystem/login.html', context)
+    logout(request)
+    return redirect('login')
 
 def my_register(request):
     context = {}
+    msg = ''
+    if request.method == 'POST':
+        if request.POST.get('password1') == request.POST.get('password2'):
+            user = User.objects.create_user(
+                request.POST.get('username'),
+                request.POST.get('email'),
+                request.POST.get('password1'),
+            )
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+            user.save()
+            # msg = 'ยินดีด้วย! %s คุณสมัครสมาชิกสำเร็จแล้ว' % (user.username)
+            return redirect('login')
+        else:
+            context['error'] = 'กรุณากรอก Password ให้ตรงกัน'
+    else:
+        user = User.objects.none()
+
+    context = {
+        'msg': msg
+    }
     return render(request, 'queuesystem/register.html', context)
 
 def change_password(request):
