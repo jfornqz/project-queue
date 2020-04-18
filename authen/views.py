@@ -1,8 +1,13 @@
-from django.shortcuts import render
 import email
+from builtins import object
+from venv import create
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+
+from .models import Medical_Personal, Patient
+
 
 # Create your views here.
 def my_login(request):
@@ -39,16 +44,22 @@ def my_register(request):
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
             user.save()
-            # msg = 'ยินดีด้วย! %s คุณสมัครสมาชิกสำเร็จแล้ว' % (user.username)
+            print(user.id)
+            patient = Patient.objects.create(
+                name_title=request.POST.get('name_titles'),
+                dob=request.POST.get('dob'),
+                gender=request.POST.get('gender'),
+                age=request.POST.get('age'),
+                address=request.POST.get('address'),
+                phone=request.POST.get('phone'),
+                account_id=User.objects.get(pk=user.id)
+            )
             return redirect('login')
         else:
             context['error'] = 'กรุณากรอก Password ให้ตรงกัน'
     else:
         user = User.objects.none()
 
-    context = {
-        'msg': msg
-    }
     return render(request, 'authen/register.html', context)
 
 def register_med(request):
