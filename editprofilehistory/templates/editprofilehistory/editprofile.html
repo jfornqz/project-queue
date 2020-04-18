@@ -48,7 +48,7 @@
                 <li class="nav-item"><a href="#profile" data-toggle="tab"  class="active nav-link">Profile</a></li>
                 <li class="nav-item"><a href="#changepassword"  data-toggle="tab"    class="nav-link">Change Password</a></li>
               </ul>
-              <form method="POST" action="">
+              <form method="POST" action="{% url 'editprofile' user.id %}">
               {% csrf_token %}
               <div class="tab-content pt-3">
                 <div class="tab-pane fade show active" id="profile">
@@ -59,13 +59,13 @@
                           <div class="col">
                             <div class="form-group">
                               <label>First Name</label>
-                              <input class="form-control" type="text" name="first_name" value="ดึงมา">
+                              <input class="form-control" type="text" name="first_name" value="{{user.first_name}}">
                             </div>
                           </div>
                           <div class="col">
                             <div class="form-group">
                               <label>Last Name</label>
-                              <input class="form-control" type="text" name="last_name" placeholder="johnny.s" value="ดึงมา">
+                              <input class="form-control" type="text" name="last_name"  value="{{user.last_name}}">
                             </div>
                           </div>
                         </div>
@@ -73,7 +73,7 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Age</label>
-                              <input class="form-control" type="text" name="age" value="ดึงมา">
+                              <input class="form-control" type="text" name="age" value="{{patient.age}}">
                             </div>
                           </div>
                           <div class="col">
@@ -87,13 +87,13 @@
                             <div class="col">
                               <div class="form-group">
                                 <label>Phone Number</label>
-                                <input class="form-control" type="text" name="phone" value="ดึงมา">
+                                <input class="form-control" type="text" name="phone" value="{{patient.phone}}">
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-group">
                                   <label>Email</label>
-                                  <input class="form-control" type="text"  value="ดึงมา">
+                                  <input class="form-control" type="text"  value="{{user.phone}}">
                                 </div>
                             </div>
                           </div>
@@ -101,7 +101,7 @@
                           <div class="col mb-3">
                             <div class="form-group">
                               <label>Address</label>
-                              <textarea class="form-control " rows="3"  name="address" >ดึงมา</textarea>
+                              <textarea class="form-control " rows="3"  name="address" >{{patient.address}}</textarea>
                             </div>
                           </div>
                         </div>
