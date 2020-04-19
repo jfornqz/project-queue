@@ -56,7 +56,7 @@ def my_register(request):
                 phone=request.POST.get('phone'),
                 account_id=user
             )
-            if request.POST.get('name_title') == 'นาย' or 'เด็กชาย':
+            if request.POST.get('name_title') == 'นาย' or request.POST.get('name_title') == 'เด็กชาย':
                 patient.gender = 'ชาย'
             else:
                 patient.gender = 'หญิง'
