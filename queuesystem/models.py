@@ -11,7 +11,9 @@ class Queue_System(models.Model):
     
 class Appoinment(models.Model):
     app_id = models.IntegerField(primary_key=True)
-    reason = models.IntegerField(max_length=255)        
+    reason = models.CharField(max_length=255)     
+    create_date = models.DateField(auto_now=True)
+    next_date = models.DateField(auto_now=False)   
     app_time = models.TimeField(auto_now=False)
     pt_id = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     me_id = models.ForeignKey(Medical_Personal, on_delete=models.CASCADE, null=False)

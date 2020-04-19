@@ -1,6 +1,7 @@
 import email
 from builtins import object
 from venv import create
+from datetime import date, datetime
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -32,6 +33,7 @@ def my_logout(request):
     return redirect('login')
 
 def my_register(request):
+    logout(request)
     context = {}
     msg = ''
     if request.method == 'POST':
@@ -39,22 +41,34 @@ def my_register(request):
             user = User.objects.create_user(
                 request.POST.get('username'),
                 request.POST.get('email'),
-                request.POST.get('password1'),
+                request.POST.get('password1')
             )
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
             user.save()
-            print(user.id)
+
             patient = Patient.objects.create(
-                name_title=request.POST.get('name_titles'),
+                name_title=request.POST.get('name_title'),
                 dob=request.POST.get('dob'),
-                gender=request.POST.get('gender'),
-                age=request.POST.get('age'),
+                gender='',
+                age=0,
                 address=request.POST.get('address'),
                 phone=request.POST.get('phone'),
-                account_id=User.objects.get(pk=user.id)
+                account_id=user
             )
-            return redirect('login')
+            if request.POST.get('name_title') == 'นาย' or 'เด็กชาย':
+                patient.gender = 'ชาย'
+            else:
+                patient.gender = 'หญิง'
+
+            birth = datetime.strptime(patient.dob, '%Y-%m-%d')
+            today = date.today()
+            print(birth)
+            print(today)
+            patient.age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+            patient.save()
+
+            return redirect('index')
         else:
             context['error'] = 'กรุณากรอก Password ให้ตรงกัน'
     else:
@@ -67,3 +81,6 @@ def register_med(request):
     return render(request, 'authen/register_medicalpersonnel.html', context)
 
 
+def change_password(request):
+    context = {}
+    return render(request, 'authen/changepassword.html', context)
