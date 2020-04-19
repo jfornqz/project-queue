@@ -2,13 +2,16 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django import forms
+from authen.models import Medical_Personal, Patient, Admin
 
 
 # Create your views here.
 def editprofile(request, num):
     user = User.objects.get(pk=num)
+    patient = Patient.objects.get(account_id_id=num)
     context = {
-        'user': user
+        'user': user,
+        'patient': patient
     }
     return render(request, 'editprofilehistory/editprofile.html', context)
 

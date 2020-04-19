@@ -30,7 +30,7 @@
                 </div>
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">John Smith</h4>
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.first_name}}&nbsp;{{user.last_name}}</h4>
                     <div class="mt-2">
                       <label for="file-upload" class="custom-file-upload btn btn-primary">
                         <img src="/static/image/camera.png" width="13%;"></img>
@@ -79,7 +79,7 @@
                           <div class="col">
                             <div class="form-group">
                                 <label>Date of Birth</label>
-                                <input style="width:100%;" value="2000-07-22" class="form-control  col-lg-5 d-block mx-auto" type="date"  id="date">
+                                <input style="width:100%;" value="{{ patient.dob|date:"Y-m-d" }}" class="form-control  col-lg-5 d-block mx-auto" type="date"  id="date">
                               </div>
                           </div>
                         </div>
@@ -93,7 +93,7 @@
                             <div class="col">
                               <div class="form-group">
                                   <label>Email</label>
-                                  <input class="form-control" type="text"  value="{{user.phone}}">
+                                  <input class="form-control" type="text"  value="{{user.email}}">
                                 </div>
                             </div>
                           </div>
