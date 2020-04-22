@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django import forms
 from authen.models import Medical_Personal, Patient
+from datetime import date, datetime
 
 
 # Create your views here.
@@ -10,9 +12,19 @@ def editprofile(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
     context = {
-        'user': user,
-        'patient': patient
-    }
+                'user': user,
+                'patient': patient
+            }
+    if request.method == 'POST':
+        if user.check_password(request.POST.get('password')) and request.POST.get('new_password')==request.POST.get('confirm_password'):
+            user.set_password(request.POST.get('new_password'))
+            user.save()
+            user = authenticate(request, username=user.username, password=request.POST.get('new_password'))
+            if user:
+                login(request, user)
+            context.update({'msg' : 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'})
+        else:
+            context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
     return render(request, 'userprofile/editprofile.html', context)
 
 def search(request):

@@ -30,7 +30,7 @@
                 </div>
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">John Smith</h4>
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.first_name}} {{user.last_name}}</h4>
                     <div class="mt-2">
                       <label for="file-upload" class="custom-file-upload btn btn-primary">
                         <img src="/static/image/camera.png" width="13%;"></img>
@@ -39,6 +39,7 @@
                         <input id="file-upload" type="file"/>
                     </div>
                   </div>
+                  <p class='color-success'>{{msg}}</p>
                   <div class="text-center text-sm-right">
                     <span class="badge badge-secondary">ดึงชื่อ group permission</span>
                   </div>
@@ -79,7 +80,7 @@
                           <div class="col">
                             <div class="form-group">
                                 <label>Date of Birth</label>
-                                <input style="width:100%;" value="2000-07-22" class="form-control  col-lg-5 d-block mx-auto" type="date"  id="date">
+                                <input style="width:100%;" value="{{patient.dob|date:'Y-m-d'}}" class="form-control  col-lg-5 d-block mx-auto" type="date"  id="date">
                               </div>
                           </div>
                         </div>
@@ -93,7 +94,7 @@
                             <div class="col">
                               <div class="form-group">
                                   <label>Email</label>
-                                  <input class="form-control" type="text"  value="{{user.phone}}">
+                                  <input class="form-control" type="text"  value="{{user.email}}">
                                 </div>
                             </div>
                           </div>
@@ -111,14 +112,15 @@
 
                    
                         <div class="tab-pane fade"  id="changepassword">
-                          <form class="form" >
+                          <form method="POST" action="{% url 'editprofile' user.id %}">
+                          {% csrf_token %}
                             <div class="row">
                               <div class="col">
                                     <div class="row">
                                       <div class="col">
                                         <div class="form-group">
                                           <label>Current Password</label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" >
+                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="password">
                                         </div>
                                       </div>
                                     </div>
@@ -126,7 +128,7 @@
                                       <div class="col">
                                         <div class="form-group">
                                           <label>New Password</label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password">
+                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="new_password">
                                         </div>
                                       </div>
                                     </div>
@@ -134,7 +136,7 @@
                                       <div class="col">
                                         <div class="form-group">
                                           <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password"></div>
+                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="confirm_password"></div>
                                       </div>
                                     </div>
                                   </div>
