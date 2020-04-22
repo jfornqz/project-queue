@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('queuesystem.urls')),
     path('', include('authen.urls')),
-    path('', include('editprofilehistory.urls'))
+    path('', include('userprofile.urls'))
 ]

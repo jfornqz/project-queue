@@ -12,7 +12,7 @@
                 <h3 class="text-center mb-5">Sign Up</h3>
                 {% if error %}<p class="text-danger text-center">{{ error }}</p>{% endif %}
                 <div class="form-holder mb-2">
-                    <input type="text" class="form-control required col-lg-5 d-block mx-auto " placeholder="Username" name="username" required>
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto " placeholder="National ID" name="national_id" maxlength="13" required>
                 </div>
                 <div class="form-holder mb-2  d-block " >
                         <select class="custom-select required d-block  mx-auto "  name="name_title" style="width:auto;" required>
@@ -47,9 +47,12 @@
 
                 <div class="form-holder mb-2">
 
-                    <input type="phone" class="form-control required  col-lg-5 d-block mx-auto"placeholder="Phone Number" name="phone" required>
+                    <input type="phone" class="form-control required  col-lg-5 d-block mx-auto"placeholder="Phone Number" name="phone" maxlength="10" required>
                 </div>
 
+                <div class="form-holder mb-2">
+                    <input type="text" class="form-control required col-lg-5 d-block mx-auto " placeholder="Username" name="username" required>
+                </div>
 
                 <div class="form-holder mb-2">
 

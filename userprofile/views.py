@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django import forms
-from authen.models import Medical_Personal, Patient, Admin
+from authen.models import Medical_Personal, Patient
 
 
 # Create your views here.
