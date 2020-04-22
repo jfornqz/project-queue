@@ -13,7 +13,7 @@ def editprofile(request, num):
         'user': user,
         'patient': patient
     }
-    return render(request, 'editprofilehistory/editprofile.html', context)
+    return render(request, 'userprofile/editprofile.html', context)
 
 def search(request):
     search = request.POST.get('search', '')
