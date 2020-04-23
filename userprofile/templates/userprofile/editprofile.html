@@ -1,90 +1,128 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<style>input[type="file"] {  
-    display: none;  
-    
-}  </style>
+<style>
+  input[type="file"] {
+    display: none;
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  }
+
+  select {
+    text-align-last: center;
+  }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 
 <div class="container mt-5 ">
-<div class="row flex-lg-nowrap mt-5">
+  <div class="row flex-lg-nowrap mt-5">
+    <div class="col mx-auto mt-5">
+      <div class="row text-center">
+        <div class="col-10 mb-3  d-block mx-auto ">
+          <div class="card ">
+            <div class="card-body">
+              <div class="e-profile">
 
 
-  <div class="col mx-auto mt-5">
-    <div class="row text-center">
-      <div class="col-10 mb-3  d-block mx-auto ">
-        <div class="card ">
-          <div class="card-body">
-            <div class="e-profile">
-              <div class="row">
-                <div class="col col-sm-auto mb-3">
-                  <div class="mx-auto" style="width: 140px;">
-                    <img src="/static/image/patient m.png" style="width: 140px;"></img>
-                    </div>
-                </div>
-               
-                </div>
-                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                  <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.first_name}} {{user.last_name}}</h4>
-                    <div class="mt-2">
-                      <label for="file-upload" class="custom-file-upload btn btn-primary">
-                        <img src="/static/image/camera.png" width="13%;"></img>
-                        <span>Change Photo</span>
-                      </label>
-                        <input id="file-upload" type="file"/>
+                <!-- ส่วนของชื่อ - นามสกุล / รูปภาพ / เปลี่ยนรูปภาพ / ชื่อ group -->
+                <!-- โชว์รูปภาพ -->
+                <div class="row">
+                  <div class="col col-sm-auto mb-3">
+                    <div class="mx-auto" style="width: 140px;">
+                      <img src="/static/image/patient m.png" style="width: 140px;"></img>
+                      <!-- รูป profile -->
                     </div>
                   </div>
-                  <p class='color-success'>{{msg}}</p>
+                </div>
+
+
+                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                  <div class="text-center text-sm-left mb-2 mb-sm-0">
+                    <!-- ดึงชื่อ - นามสกุล -->
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.first_name}}&nbsp;{{user.last_name}}</h4>
+                    <div class="mt-2">
+                      <!-- form สำหรับเปลี่ยนรูปภาพ -->
+                      <form method="POST" action="">
+                        {% csrf_token %}
+                        <label for="file-upload" class="custom-file-upload btn btn-primary">
+                          <img src="/static/image/camera.png" width="13%;"></img>
+                          <span>Change Photo</span>
+                        </label>
+                        <!-- ปุ่มเปลี่ยนรูปภาพ -->
+                        <input id="file-upload" type="file" />
+                        <!-- ** ปุ่มนี้แสดงเฉพาะผู้ป่วย ** -->
+                    </div>
+
+                  </div>
+                  <!-- ดึงชื่อ group -->
                   <div class="text-center text-sm-right">
                     <span class="badge badge-secondary">ดึงชื่อ group permission</span>
                   </div>
                 </div>
-              </div>
-              <ul class="nav nav-tabs" >
-                <li class="nav-item"><a href="#profile" data-toggle="tab"  class="active nav-link">Profile</a></li>
-                <li class="nav-item"><a href="#changepassword"  data-toggle="tab"    class="nav-link">Change Password</a></li>
-              </ul>
-              <form method="POST" action="{% url 'editprofile' user.id %}">
-              {% csrf_token %}
-              <div class="tab-content pt-3">
-                <div class="tab-pane fade show active" id="profile">
-                  <form class="form" >
-                    <div class="row">
-                      <div class="col">
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>First Name</label>
-                              <input class="form-control" type="text" name="first_name" value="{{user.first_name}}">
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Last Name</label>
-                              <input class="form-control" type="text" name="last_name"  value="{{user.last_name}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Age</label>
-                              <input class="form-control" type="text" name="age" value="{{patient.age}}">
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                                <label>Date of Birth</label>
-                                <input style="width:100%;" value="{{patient.dob|date:'Y-m-d'}}" class="form-control  col-lg-5 d-block mx-auto" type="date"  id="date">
+                </form>
+                <!-- จบส่วนของชื่อ - นามสกุล / รูปภาพ / เปลี่ยนรูปภาพ / ชื่อ group -->
+
+
+                <!-- เปิด tap -->
+                <ul class="nav nav-tabs">
+                  {% comment %} Tap แสดงเฉพาะผู้ป่วย {% endcomment %}
+                  <li class="nav-item"><a href="#profile" data-toggle="tab" class="active nav-link">Profile</a></li>
+                  <li class="nav-item"><a href="#changepassword" data-toggle="tab" class="nav-link">Change Password</a>
+                  </li>
+                  {% comment %} ปิด Tap แสดงเฉพาะผู้ป่วย {% endcomment %}
+
+                  {% comment %} Tap แสดงเฉพาะบุคลากรทางคลินิก {% endcomment %}
+                  <li class="nav-item"><a href="#patientprofile" data-toggle="tab" class="nav-link">Patient Profile</a>
+                  </li>
+                  <li class="nav-item"><a href="#medicalhistory" data-toggle="tab" class="nav-link">Medical history</a>
+                  </li>
+                  <li class="nav-item"><a href="#admissionnote" data-toggle="tab" class="nav-link">Admission Note</a>
+                  </li>
+                  {% comment %} ปิด Tap แสดงเฉพาะบุคลากรทางคลินิก {% endcomment %}
+                </ul>
+                <!-- ปิด Tap -->
+
+                <!-- เปิดฟอร์มสำหรับแก้ profile -->
+                <form method="POST" action="{% url 'editprofile' user.id %}">
+                  {% csrf_token %}
+                  <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="profile">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>First Name</label>
+                                <input class="form-control" type="text" name="first_name" value="{{user.first_name}}">
                               </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" type="text" name="last_name" value="{{user.last_name}}">
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div class="row">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Age</label>
+                                <input class="form-control" type="text" name="age" value="{{patient.age}}">
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input style="width:100%; " value="{{ patient.dob|date:'Y-m-d' }}"
+                                  class="form-control  mx-auto" type="date" id="datee">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
                             <div class="col">
                               <div class="form-group">
                                 <label>Phone Number</label>
@@ -93,78 +131,338 @@
                             </div>
                             <div class="col">
                               <div class="form-group">
-                                  <label>Email</label>
-                                  <input class="form-control" type="text"  value="{{user.email}}">
-                                </div>
+                                <label>Email</label>
+                                <input class="form-control" type="text" value="{{user.email}}">
+                              </div>
                             </div>
                           </div>
+                          <div class="row">
+                            <div class="col mb-3">
+                              <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control " rows="3" name="address">{{patient.address}}</textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col d-flex justify-content-end mb-3 mr-4">
+                          <!-- ปุ่ม save ของ profile-->
+                          <button class="btn btn-primary" type="submit">Save Changes</button>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+                <!-- ปิดฟอร์มแก้ profile -->
+
+
+                <!-- div แก้รหัสผ่าน -->
+                <div class="tab-pane fade" id="changepassword">
+                  <div class="row">
+                    <div class="col">
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <!-- ฟอร์มเปลี่ยนรหัสผ่าน -->
+                            <form method="POST" action="">
+                              {% csrf_token %}
+                              <label>Current Password</label>
+                              <input class="form-control col-lg-5 d-block mx-auto" type="password">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label>New Password</label>
+                            <input class="form-control col-lg-5 d-block mx-auto" type="new_password">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                            <input class="form-control col-lg-5 d-block mx-auto" type="confirm_password"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col d-flex justify-content-end mb-3 mr-4">
+                      <!-- ปุ่ม เปลี่ยนรหัสผ่าน-->
+                      <button class="btn btn-success" type="submit">Change Password</button>
+                    </div>
+                  </div>
+                </div>
+                </form>
+                <!-- ปิด div แก้รหัสผ่าน -->
+
+
+
+                <!-- เปิด div สำหรับบุคลากร ดู patient profile -->
+                <div class="tab-pane fade" id="patientprofile">
+                  <form class="form">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>First Name</label>
+                              <input class="form-control" type="text" name="first_name" value="{{user.first_name}}"
+                                disabled>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              <input class="form-control" type="text" name="last_name" value="{{user.last_name}}"
+                                disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Age</label>
+                              <input class="form-control" type="text" name="age" value="{{patient.age}}" disabled>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Date of Birth</label>
+                              <input style="width:100%;" value="{{ patient.dob|date:'Y-m-d' }}"
+                                class="form-control   mx-auto" type="date" id="date" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Phone Number</label>
+                              <input class="form-control" type="text" name="phone" value="{{patient.phone}}" disabled>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Email</label>
+                              <input class="form-control" type="text" value="{{user.email}}" disabled>
+                            </div>
+                          </div>
+                        </div>
                         <div class="row">
                           <div class="col mb-3">
                             <div class="form-group">
                               <label>Address</label>
-                              <textarea class="form-control " rows="3"  name="address" >{{patient.address}}</textarea>
+                              <textarea class="form-control " rows="3" name="address"
+                                disabled>{{patient.address}}</textarea>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                 </div>
+                <!-- ปิด div สำหรับบุคลากรดู patient profile -->
 
-                   
-                        <div class="tab-pane fade"  id="changepassword">
-                          <form method="POST" action="{% url 'editprofile' user.id %}">
-                          {% csrf_token %}
-                            <div class="row">
-                              <div class="col">
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="form-group">
-                                          <label>Current Password</label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="password">
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="form-group">
-                                          <label>New Password</label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="new_password">
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="form-group">
-                                          <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                          <input class="form-control col-lg-5 d-block mx-auto" type="password" name="confirm_password"></div>
-                                      </div>
+
+
+                <!-- เปิดฟอร์มสำหรับแก้ medical history -->
+                <form method="POST" action="">
+                  {% csrf_token %}
+                  <div class="tab-pane fade" id="medicalhistory">
+                    <form class="form">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Patient No.</label>
+                                <input class="form-control" type="text" name="patientno"
+                                  value="{{patient.account_id_id}}" disabled>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Full Name</label>
+                                <input class="form-control" type="text" name="fullname"
+                                  value="{{user.first_name}}&nbsp;{{user.last_name}}" disabled>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Occupation (อาชีพ)</label>
+                                <input class="form-control" type="text" name="occupation">
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Congenital Disease (โรคประจำตัว)</label>
+                                <input class="form-control" type="text" name="congenital_disease">
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <h4 class="text-center mt-4 mb-4" style="color:red;">Emergency contact</h4>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label style="color:red;">First Name</label>
+                                <input class="form-control" type="text" name="fname_emergency" value="">
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label style="color:red;">Last name</label>
+                                <input class="form-control" type="text" name="lname_emergency" value="">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label style="color:red;">Relationship</label>
+                                <input class="form-control" type="text" name="relationship_emergency" value="">
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label style="color:red;">Phone Number</label>
+                                <input class="form-control" type="text" name="phone_emergency" value="">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label style="color:red;">Address (ที่อยู่ ที่ติดต่อได้)</label>
+                                <textarea class="form-control " rows="3" name="address_emergency"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end mb-3 mr-4">
+                              <button class="btn btn-warning mt-3 mb-3" type="submit">Save Changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </form>
+                <!-- ปิดฟอร์มแก้ medical history -->
+
+
+
+
+
+                <!-- เปิดdivสำหรับแก้  Admission note  -->
+                  <div class="tab-pane fade" id="admissionnote">
+                    <div class="row">
+                      <div class="col">
+                        <!-- div ดูประวัติเข้ารับการรักษา -->
+                        <h4 class="text-center mb-3">ประวัติเข้ารับการรักษา</h4>
+                        <div class="accordion " id="accordionExample">
+
+                          <div class="card">
+                            <div class="card-header" id="headingOne">
+                              <h2 class="mb-0">
+                                <!-- ให้แสดงวันที่แต่ละครั้งที่มาทำการรักษา -->
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  วันที่ 12/03/62
+                                </button>
+                                <!-- จบวันที่ที่แสดง -->
+                              </h2>
+                            </div>
+
+                            <!-- แสดงข้อมูลข้างใน -->
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>No.(ตรวจครั้งที่)</label>
+                                      <input class="form-control" type="text" name="admission_no" value="" disabled>
                                     </div>
                                   </div>
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Patient Types (ประเภทผู้ป่วย)</label>
+                                      <select class="custom-select d-block  mx-auto " name="patient_types" disabled>
+                                        <option selected disabled class=" d-block mx-auto ">ผู้ป่วยทั่วไป</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col d-flex justify-content-end mb-3 mr-4">
-                                  <button class="btn btn-primary" type="submit">Save Changes</button>
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Weight (น้ำหนัก)</label>
+                                      <input class="form-control" type="text" name="weight" value="" disabled>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Height (ส่วนสูง)</label>
+                                      <input class="form-control" type="text" name="height" value="" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Blood Pressure (ค่าความดัน)</label>
+                                      <input class="form-control" type="text" name="pressure" value="" disabled>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Drug Allergy (การแพ้ยา)</label>
+                                      <input class="form-control" type="text" name="drug_allergy" value="" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <div class="form-group">
+                                      <label>Symptoms (อาการที่พบ)</label>
+                                      <textarea class="form-control " rows="2" name="symptoms" disabled></textarea>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                        </form>
+                            </div>
+                            <!-- จบข้อมูลที่แสดง -->
+                          </div>
+                        </div>
+
+                        <!-- ปิด div  Admission note -->
+                      </div>
                     </div>
+                  </div>
 
-                   
 
-                </div>
+
+
+
+
+
+
+
+
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 </div>
-</div>
+
 
 {% endblock content %}

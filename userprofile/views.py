@@ -42,4 +42,31 @@ def search(request):
 
 
     }
-    return render(request, 'editprofilehistory/search.html', context)
+    return render(request, 'userprofile/search.html', context)
+
+def admittedpatienthistory(request, num):
+    user = User.objects.get(pk=num)
+    patient = Patient.objects.get(account_id_id=num)
+    context = {
+        'user' : user,
+        'patient' : patient
+
+    }
+    return render(request, 'userprofile/admittedpatienthistorycreate.html', context)
+
+def search_foradmitted(request):
+    search = request.POST.get('search', '')
+    first_name_patient = User.objects.filter(first_name__icontains=search)
+    id_patient = User.objects.filter(id__icontains=search)
+    result = zip(id_patient, first_name_patient)
+    # if id_patient.exists():
+    #    result = zip(id_patient, first_name_patient)
+    context = {
+        'firstname_patient' : first_name_patient,
+        'id_patient' : id_patient,
+        'result' : result,
+        'search' : search,
+
+
+    }
+    return render(request, 'userprofile/searchforadmitted.html', context)
