@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+.navnav{
+    background-color:#D62020; 
+    width: 100%;
+  
+  }
+</style>
+
 
 <div class="container mt-5 ">
     <div class="row flex-lg-nowrap mt-5">
@@ -16,70 +24,50 @@
                                     <h5 class="card-title" style="color: tomato;">รหัสผู้ป่วย :
                                         {{patient.account_id_id}}</h5>
                                     <h5 class="card-title" style="color: tomato;">ชื่อผู้ป่วย :
-                                        {{user.first_name}}&nbsp;{{user.last_name}}</h5>
+                                        &nbsp;</h5>
 
                                     <div class="row mt-5">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label>No.(ตรวจครั้งที่)</label>
-                                                <input class="form-control" type="text" name="admission_no"
+                                                <label>No.(นัดครั้งที่)</label>
+                                                <input class="form-control" type="text" name="app_id"
                                                     placeholder="กรุณาใส่เป็นตัวเลข เช่น 1">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label>Patient Types (ประเภทผู้ป่วย)</label>
-                                                <select class="custom-select required d-block  mx-auto "
-                                                    name="name_title" style="width:auto;" required>
-                                                    <option selected disabled>กรุณาเลือกประเภทผู้ป่วย / Select Patient
-                                                        types
-                                                    </option> ----</option>
-                                                    <option value="ผู้ป่วยทั่วไป">ผู้ป่วยทั่วไป</option>
-                                                    <option value="ผู้ป่วยฉุกเฉิน">ผู้ป่วยฉุกเฉิน</option>
-                                                </select>
+                                                <label>Time (เวลาประมาณการที่นัด)</label>
+                                                <input class="form-control" type="time" name="app_time" value="">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label>Weight (น้ำหนัก)</label>
-                                                <input class="form-control" type="text" name="weight" value="">
+                                                <label>Create Date (วันที่สร้างการนัด)</label>
+                                                <input class="form-control" type="text" name="create_date" value="" disabled>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label>Height (ส่วนสูง)</label>
-                                                <input class="form-control" type="text" name="height" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Blood Pressure (ค่าความดัน)</label>
-                                                <input class="form-control" type="text" name="blood" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Drug Allergy (การแพ้ยา)</label>
-                                                <input class="form-control" type="text" name="allergy" value="">
+                                                <label>Next Date (วันที่นัดในครั้งถัดไป)</label>
+                                                <input style="width:100%;" value=""
+                                                class="form-control   mx-auto" type="date" name="next_date" >
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col mb-3">
                                             <div class="form-group">
-                                                <label>Symptoms (อาการที่พบ)</label>
-                                                <textarea class="form-control " rows="2" name=""></textarea>
+                                                <label>Reason (เหตุที่นัด)</label>
+                                                <textarea class="form-control " rows="2" name="reason"></textarea>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col d-flex justify-content-end  mr-4">
-                                            <button class="btn btn-warning mt-3 " type="submit">Create</button>
+                                            <button class="btn btn-success mt-3 " type="submit">Create</button>
                                         </div>
                                     </div>
                                 </form>
