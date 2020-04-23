@@ -47,27 +47,31 @@ def my_register(request):
             user.last_name = request.POST.get('last_name')
             user.save()
 
-            try:
-                patient = Patient.objects.create(
-                    national_id=request.POST.get('national_id'),
-                    name_title=request.POST.get('name_title'),
-                    dob=request.POST.get('dob'),
-                    gender='',
-                    age=0,
-                    address=request.POST.get('address'),
-                    phone=request.POST.get('phone'),
-                    account_id=user
-                )
-                if request.POST.get('name_title') == 'นาย' or request.POST.get('name_title') == 'เด็กชาย':
-                    patient.gender = 'ชาย'
-                else:
-                    patient.gender = 'หญิง'
-                birth = datetime.strptime(patient.dob, '%Y-%m-%d')
-                today = date.today()
-                patient.age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
-                patient.save()
-                return redirect('index')
-            except:
+            today = datetime.today()
+            birth = datetime.strptime(request.POST.get('dob'), '%Y-%m-%d')
+            if birth < today:
+                try:
+                    patient = Patient.objects.create(
+                        national_id=request.POST.get('national_id'),
+                        name_title=request.POST.get('name_title'),
+                        dob=request.POST.get('dob'),
+                        gender='',
+                        age=0,
+                        address=request.POST.get('address'),
+                        phone=request.POST.get('phone'),
+                        account_id=user
+                    )
+                    if request.POST.get('name_title') == 'นาย' or request.POST.get('name_title') == 'เด็กชาย':
+                        patient.gender = 'ชาย'
+                    else:
+                        patient.gender = 'หญิง'
+                    patient.age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+                    patient.save()
+                    return redirect('index')
+                except:
+                    user.delete()
+                    context['error'] = 'กรอกข้อมูลไม่ถูกต้อง'
+            else:
                 user.delete()
                 context['error'] = 'กรอกข้อมูลไม่ถูกต้อง'
         else:
