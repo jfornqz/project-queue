@@ -14,12 +14,10 @@
   <title>Queue Reservation System KMITl</title>
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <!--
 			CSS
 			============================================= -->
@@ -52,58 +50,125 @@
     .navbar-brand:focus {
       color: yellow !important;
     }
+
+
+    .btn-outline-create {
+      background: none !important;
+      /*2cc8df*/
+      border: none;
+      color: white;
+
+    }
+
+    .btn-outline-create:hover {
+      background: none !important;
+      color: yellow;
+      box-shadow: none !important;
+    }
+
+    .btn-outline-create:focus {
+      background: none !important;
+    }
+
+    .btn-outline-create:active {
+      background: none !important;
+    }
+
+
+    .dropdown-item:hover {
+      background: none !important;
+      background-image: none;
+    }
+
+    .navnav {
+      background-color: #38C99F;
+      width: 100%;
+
+    }
   </style>
+
 </head>
 
-<body class="text-center">
+<body class="text-center ">
 
+  <div id="undefined-sticky-wrapper" class="sticky-wrapper" >
 
-
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color:#F2793C; width: 100%; ">
-    <a class="navbar-brand " href="{% url 'index' %}" style="color: white;">
-      Home
+      <nav class=" navbar navbar-expand-lg navbar-light fixed-top navnav ">
+        <a class=" navbar-brand " href=" {% url 'index' %}">
+    Queue KMITL Clinic
     </a>
-    <button class="navbar-toggler type=" button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    <button class="navbar-toggler" type=" button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-        <li class="nav-item mypage align-self-center">
-          <h5 class="my-auto text-success">User: {{request.user.username}}</h5>
+        <li class="nav-item align-self-center mr-5">
+          <h5 class="my-auto text-light mr-5">User: {{request.user.username}}</h5>
         </li>
-        <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-light mx-5">Logout</button>
+        <div class="d-flex justify-content-center dropdown  show ">
+          <a class="btn btn-outline-create  dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
+            Queues
+          </a>
+
+          <div class="dropdown-menu ">
+            <a class="dropdown-item" href="{% url 'run_queue' %}">Run Queues</a>
+            <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
+        </div>
+        <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
+          <a class="btn btn-outline-create  ml-5 dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
+            Patient Search
+          </a>
+
+          <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
+            <a class="dropdown-item" href="{% url 'appointment_create' %}">Create Appointment</a>
+            <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
+            <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
+            <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+          </div>
+        </div>
+        <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-create mr-5">Logout</button>
         {% else %}
         <div class="btn-group" role="group" aria-label="Basic example">
           <button onclick="window.location.href = {% url 'login' %}"
-            class="btn btn-outline-light my-2 my-sm-0">Login</button>
-          <button onclick="window.location.href = {% url 'register' %}" class="btn btn-outline-light my-2 my-sm-0">Sign
+            class="btn btn-outline-create my-2 my-sm-0">Login</button>
+          <button onclick="window.location.href = {% url 'register' %}"
+            class="btn btn btn-outline-create  my-2 my-sm-0">Sign
             Up</button>
-        </div>
-        {% comment %} <li class="nav-item mypage align-self-center">
-          <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
-            <a class="nav-link" href="{% url 'login' %}">
-              <button class="btn btn-outline-dark my-2 my-sm-0" type="">Login</button>
-            </a>
-            <a class="nav-link" href="{% url 'register' %}">
-              <button class="btn btn-outline-dark my-2 my-sm-0" type="">Register</button>
-            </a>
-          </div>
-        </li> {% endcomment %}
-        {% endif %}
-      </ul>
-      {% comment %} <ul class="nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}" style="font-size: 1.2em;">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}" style="font-size: 1.2em;">Sign Up</a>
-        </li>
-      </ul> {% endcomment %}
-    </div>
-  </nav>
 
+        </div>
+
+    </div>
+    {% comment %} <li class="nav-item mypage align-self-center">
+      <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
+        <a class="nav-link" href="{% url 'login' %}">
+          <button class="btn btn-outline-dark my-2 my-sm-0" type="">Login</button>
+        </a>
+        <a class="nav-link" href="{% url 'register' %}">
+          <button class="btn btn-outline-dark my-2 my-sm-0" type="">Register</button>
+        </a>
+      </div>
+    </li> {% endcomment %}
+    {% endif %}
+    </ul>
+    {% comment %} <ul class="nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}" style="font-size: 1.2em;">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'register' %}" style="font-size: 1.2em;">Sign Up</a>
+      </li>
+    </ul> {% endcomment %}
+  </div>
+  </nav>
+  <script>$(function () {
+      $(document).scroll(function () {
+        var $nav = $(".navbar-fixed-top");
+        $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+      });
+    });</script>
 
   {% block content %}
 

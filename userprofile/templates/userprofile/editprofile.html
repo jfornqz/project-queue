@@ -7,14 +7,31 @@
 
   }
 
+  .navnav{
+  background-color:#D65D20; 
+  width: 100%;
+
+}
+
+  .collapsing {
+        height: 0;
+        overflow: hidden;
+        -webkit-transition: height .35s ease;
+        -o-transition: height .35s ease;
+        transition: height .35s ease;
+    }
+
+
+    #accordion .collapsing {
+        transition: height 1s ease-in-out;
+    }
+
   select {
     text-align-last: center;
   }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 
 
@@ -87,7 +104,7 @@
                 <!-- ปิด Tap -->
 
                 <!-- เปิดฟอร์มสำหรับแก้ profile -->
-                <form method="POST" action="{% url 'editprofile' user.id %}">
+                <form method="POST" action="">
                   {% csrf_token %}
                   <div class="tab-content pt-3">
                     <div class="tab-pane fade show active" id="profile">
@@ -165,10 +182,10 @@
                         <div class="col">
                           <div class="form-group">
                             <!-- ฟอร์มเปลี่ยนรหัสผ่าน -->
-                            <form method="POST" action="">
+                            <form method="POST" action="{% url 'editprofile' user.id %}">
                               {% csrf_token %}
                               <label>Current Password</label>
-                              <input class="form-control col-lg-5 d-block mx-auto" type="password">
+                              <input class="form-control col-lg-5 d-block mx-auto" type="password" name="password">
                           </div>
                         </div>
                       </div>
@@ -176,7 +193,7 @@
                         <div class="col">
                           <div class="form-group">
                             <label>New Password</label>
-                            <input class="form-control col-lg-5 d-block mx-auto" type="new_password">
+                            <input class="form-control col-lg-5 d-block mx-auto" type="password" name="new_password">
                           </div>
                         </div>
                       </div>
@@ -184,7 +201,7 @@
                         <div class="col">
                           <div class="form-group">
                             <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                            <input class="form-control col-lg-5 d-block mx-auto" type="confirm_password"></div>
+                            <input class="form-control col-lg-5 d-block mx-auto" type="password" name="confirm_password"></div>
                         </div>
                       </div>
                     </div>

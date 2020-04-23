@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-<style>
-    .navnav {
-        background-color: #2078D6;
-        width: 100%;
-
-    }
-</style>
-
-
-
 <div class="container mt-5 ">
     <div class="row flex-lg-nowrap mt-5">
         <div class="col mx-auto mt-5">
@@ -22,8 +11,8 @@
                             <div class="e-profile">
                                 <form action="" method="POST">
                                     {% csrf_token %}
-                                    <h4 class="card-title">Add Admitted Patient History</h4>
-                                    <p class="card-title">(เพิ่มประวัติผู้ป่วยที่เข้ารับการรักษา)</p>
+                                    <h4 class="card-title">Create Appointment</h4>
+                                    <p class="card-title">(สร้างการนัดแก่ผู้ป่วยเพื่อรับการรักษาในครั้งถัดไป)</p>
                                     <h5 class="card-title" style="color: tomato;">รหัสผู้ป่วย :
                                         {{patient.account_id_id}}</h5>
                                     <h5 class="card-title" style="color: tomato;">ชื่อผู้ป่วย :
@@ -110,11 +99,5 @@
     </div>
 </div>
 </div>
-
-
-
-
-
-
 
 {% endblock content %}
