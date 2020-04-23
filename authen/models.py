@@ -10,6 +10,7 @@ class Patient(models.Model):
     gender = models.CharField(max_length=255)
     name_title = models.CharField(max_length=255)
     dob = models.DateField(auto_now=False)
+    blood_type = models.CharField(max_length=3)
     address = models.TextField()
     account_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
