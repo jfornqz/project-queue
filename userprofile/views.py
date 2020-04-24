@@ -8,6 +8,10 @@ from datetime import date, datetime
 
 
 # Create your views here.
+
+# 2 group > ผู้ป่วย / บุลคากรคลินิก
+# ผู้ป่วย > Edit Profile / Change password
+# บุลคากรคลินิก > Patient Profile / Medical History / Admission note
 def editprofile(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
@@ -27,6 +31,8 @@ def editprofile(request, num):
             context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
     return render(request, 'userprofile/editprofile.html', context)
 
+# บุคลากรเห็นเท่านั้น
+# ค้นหาผู้ป่วยเพื่อที่จะเข้าหน้า Patient Profile / Medical History / Admission note
 def search(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)
@@ -44,6 +50,8 @@ def search(request):
     }
     return render(request, 'userprofile/search.html', context)
 
+# บุคลากรเห็นเท่านั้น
+# หน้าเพิ่ม ประวัติเข้ารับการรักษาของผู้ป่วย admittedpatienthistorycreate 
 def admittedpatienthistory(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
@@ -54,6 +62,8 @@ def admittedpatienthistory(request, num):
     }
     return render(request, 'userprofile/admittedpatienthistorycreate.html', context)
 
+# บุคลากรเห็นเท่านั้น
+# ค้นหาผู้ป่วยเพื่อที่จะเข้าหน้า admittedpatienthistorycreate 
 def search_foradmitted(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)

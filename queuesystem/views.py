@@ -14,30 +14,65 @@ def index(request):
     context = {}
     return render(request, 'queuesystem/index.html', context)
 
+# ผู้ป่วยเห็นเท่านั้น
+# index ผู้ป่วย (เด้งมาจากเวลาผู้ป่วย login)
 def main_patient(request):
     context = {}
     return render(request, 'queuesystem/main_patient.html', context)
 
+# บุคลากรคลินิกเห็นเท่านั้น
+# index บุคลากรคลินิก (เด้งมาจากเวลาบุคลากรคลินิก login)
 def main_medicalpersonnel(request):
     context = {}
     return render(request, 'queuesystem/main_medicalpersonnel.html', context)
 
+
+# บุคลากรคลินิก เห็นเท่านั้น
+# หน้า start queue > คลิ๊กไปปุ๊ปจะเข้าสู่หน้า run queue
+def start_queue(request):
+    context = {}
+    return render(request, 'queuesystem/startqueue.html', context)
+
+
+# บุคลากรคลินิก เห็นเท่านั้น
+# รันคิว
 def run_queue(request):
     context = {}
     return render(request, 'queuesystem/runqueue.html', context)
 
+# บุลคากรคลินิก เห็นเท่านั้น
+# แสดงคิวที่เหลืออยู่
 def remaining_queue(request):
     context = {}
     return render(request, 'queuesystem/remainingqueue.html', context)
 
+# ผู้ป่วยเห็นเท่านั้น
+# รับคิว
 def generate_queue(request):
     context = {}
     return render(request, 'queuesystem/generatequeue.html', context)
 
-def appoitment_check(request):
-    context = {}
-    return render(request, 'queuesystem/appoitmentcheck.html', context)
+# ผู้ป่วยเห็นเท่านั้น
+# หน้าเช็คการนัดของผู้ป่วย (แสดงการนัดทั้งหมดของผู้ป่วย) มีการนัดทั้งหมดของผู้ป่วย คลิ๊กไปเข้าจะเป็นหน้า main_appointment
+def appointment_check(request):
+    search = request.POST.get('search', '')
+    first_name_patient = User.objects.filter(first_name__icontains=search)
+    id_patient = User.objects.filter(id__icontains=search)
+    result = zip(id_patient, first_name_patient)
+    # if id_patient.exists():
+    #    result = zip(id_patient, first_name_patient)
+    context = {
+        'firstname_patient' : first_name_patient,
+        'id_patient' : id_patient,
+        'result' : result,
+        'search' : search,
 
+
+    }
+    return render(request, 'queuesystem/appointmentcheck.html', context)
+
+# บุคลากรคลินิกเห็นเท่านั้น
+# หน้าสร้างการนัด 
 def appointment_create(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
@@ -47,6 +82,8 @@ def appointment_create(request, num):
             }
     return render(request, 'queuesystem/appointmentcreate.html', context)
 
+# บุคลากรคลินิกดูได้เท่านั้น
+# ค้นหารายชื่อผู้ป่วย เพื่อสร้างการนัด (next page > appointmentcreate)
 def search_appointment(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)
@@ -64,8 +101,9 @@ def search_appointment(request):
     }
     return render(request, 'queuesystem/searchappointment.html', context)
 
-
-def main_appointment(request):
+# ผู้ป่วยเห็นเท่านั้น
+# หน้า main ของ appointment เวลาผู้ป่วยดูรายละเอียดการนัด
+def main_appointment(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
     context = {

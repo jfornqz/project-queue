@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .navnav {
+        background-color: #B022EA;
+        width: 100%;
+
+    }
+</style>
+
+
+<div class="container ">
+    <div class="row mt-5">
+        <div class="col mt-5">
+            <br>
+            <div class="list-group col-12  mx-auto d-block">
+                <button type="button" class="list-group-item list-group-item-action" disabled>
+                    แสดงนัดทั้งหมดของ ... (ชื่อผู้ป่วย)
+                </button>
+
+            </div>
+
+             {% comment %} {% for id, user in result %}  {% endcomment %}
+            <div class="list-group col-12 d-block text-left">
+                <a href="{% url 'main_appointment' user.id %}">
+                    <button type="button" class="list-group-item list-group-item-action">
+                        <font style="color: tomato;">วันที่นัด: 12/03/2020</font>&nbsp;&nbsp;
+                        <font style="color: tomato;">เวลาประมาณการ: 10.00-12.00</font>&nbsp;&nbsp;
+                        <font style="color: tomato;">ชื่อแพทย์: นายณรงค์ คงกระพัน (แพทย์)</font>
+                    </button>
+                </a>
+            </div>
+             {% comment %} {% endfor %}  {% endcomment %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

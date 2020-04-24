@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Start gallery Area -->
+			<section class="section-gap" id="gallery">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col  mb-4 header-text">
+                            <form action="{%url 'run_queue' %}" method="post">
+                                {% csrf_token %}
+                            <h1 class="text-black" style="font-size: 16.5px;">กรุณาใส่รหัส เพื่อทำการเข้าสู่หน้า run queue</h1>
+                            <input class="form-control mt-3 mx-auto col-5 lg required" type="password" name="" required>
+					
+                        </div>
+                    </div>
+                        <div class="row justify-content-center">
+                            <div class="col mx-auto">
+                                <button  type="submit" class="btn btn-primary  text-uppercase mx-auto">&nbsp;Start Queue&nbsp;</button>
+                            </div>
+                       
+					</div>
+					<div class="gal">
+						
+										
+					</div>
+				</form>
+			</section>
+
+{% endblock content %}

@@ -1,6 +1,120 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+    .table th,td,tr {
+        text-align: center;
 
+    }
+
+    td { text-align: left; }
+
+    .table>thead>tr>th {
+        vertical-align: baseline;
+
+    }
+
+    table {
+    table-layout: auto;
+    word-wrap: break-word;
+}
+</style>
+
+
+<section class="section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 mx-auto">
+                <h1 class=" text-black" style="font-size: 1.7em; ">หมายเลขคิวปัจจุบันคือ</h1>
+                <h1 class="text-black" style="font-size: 10vw; ">1 </h1>
+                <p>
+                    วันที่ : วันนี้
+                </p>
+                <p>
+                    เวลา : วันนี้
+                </p>
+            </div>
+
+            <div class="col-md-9" ">
+                <div class=" table-responsive">
+                <table class="table table-bordered align-items-start">
+                    <thead>
+                        <tr>
+                            <th scope="col">หมายเลขคิว</th>
+                            <th scope="col">ผู้ป่วยที่ทำการกดคิว</th>
+                            <th scope="col">มีนัด / ไม่มีนัด</th>
+                            <th scope="col">แพทย์ที่นัดพบ</th>
+                            <th scope="col" >สถานะ</th>
+                            <th scope="col" ></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td >สมมติคนที่ 1</td>
+                            <td>
+                                <input type="radio" name="1" value="มีนัด" checked>
+                                <label>มีนัด</label><br>
+                                <input type="radio" name="1" value="ไม่มีนัด">
+                                <label>ไม่มีนัด</label>
+                            </td>
+                            <td>นายณรงค์ คงกระพัน</td>
+                            <td >
+                                <p style="text-align: center;">waiting</p>
+                            </td>
+                            <td style="text-align: center;">
+                                <button type="submit"
+                                    class="btn btn-success text-uppercase ">&nbsp;เรียกคิว&nbsp;</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>สมมติคนที่ 2</td>
+                            <td>
+                                <input type="radio" name="2" value="มีนัด">
+                                <label>มีนัด</label><br>
+                                <input type="radio" name="2" value="ไม่มีนัด" checked>
+                                <label>ไม่มีนัด</label>
+                            </td>
+                            <td>-</td>
+                            <td>
+                                <p style="text-align: center;">waiting</p>
+                            </td>
+                            <td style="text-align: center;">
+                                <button type="submit" class="btn btn-success ">&nbsp;เรียกคิว&nbsp;</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>สมมติคนที่ 3</td>
+                            <td>
+                                <input type="radio" name="3" value="มีนัด">
+                                <label>มีนัด</label><br>
+                                <input type="radio" name="3" value="ไม่มีนัด" checked>
+                                <label>ไม่มีนัด</label>
+                            </td>
+                            <td>-</td>
+                            <td>
+                                <p style="text-align: center;">waiting</p>
+                            </td>
+                            <td style="text-align: center;">
+                                <button type="submit"
+                                    class="btn btn-success text-uppercase mx-auto">&nbsp;เรียกคิว&nbsp;</button>
+                            </td>
+
+
+                        </tr>
+
+                        
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</section>
 
 {% endblock content %}
