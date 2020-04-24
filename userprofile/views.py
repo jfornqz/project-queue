@@ -1,11 +1,13 @@
-from django.shortcuts import render
+import email
+from datetime import date, datetime
+
+from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms import formset_factory
-from django import forms
-from authen.models import Medical_Personal, Patient
-from datetime import date, datetime
+from django.shortcuts import render
 
+from authen.models import Medical_Personal, Patient
 
 # Create your views here.
 
@@ -19,14 +21,32 @@ def editprofile(request, num):
                 'user': user,
                 'patient': patient
             }
-    if request.method == 'POST':
+
+    if request.method == 'POST' and 'savepassword' in request.POST:
         if user.check_password(request.POST.get('password')) and request.POST.get('new_password')==request.POST.get('confirm_password'):
             user.set_password(request.POST.get('new_password'))
             user.save()
-            user = authenticate(request, username=user.username, password=request.POST.get('new_password'))
-            if user:
-                login(request, user)
+            for_check = authenticate(request, username=user.username, password=request.POST.get('new_password'))
+            if for_check:
+                login(request, for_check)
             context.update({'msg' : 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'})
+        else:
+            context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+
+    elif request.method == 'POST' and 'saveprofile' in request.POST:
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        today = datetime.today()
+        birth = datetime.strptime(request.POST.get('dob'), '%Y-%m-%d')
+        if birth < today:
+            patient.phone = request.POST.get('phone')
+            patient.address = request.POST.get('address')
+            patient.dob = birth
+            patient.age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+            patient.save()
+            context.update({'msg' : 'บันทึกสำเร็จ!!!'})
         else:
             context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
     return render(request, 'userprofile/editprofile.html', context)
