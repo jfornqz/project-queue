@@ -1,20 +1,24 @@
 from django.db import models
-from authen.models import Patient, Medical_Personal
-
+from django.contrib.auth.models import User
 # Create your models here.
-class Queue_System(models.Model):
-    queue_id = models.IntegerField(primary_key=True)
-    queue_no = models.IntegerField()
-    time = models.TimeField(auto_now=False)
-    date = models.DateField(auto_now=False)
-    status = models.BooleanField(null=False)
-    
-class Appoinment(models.Model):
-    app_id = models.IntegerField(primary_key=True)
-    reason = models.CharField(max_length=255)     
-    create_date = models.DateField(auto_now=True)
-    next_date = models.DateField(auto_now=False)   
-    app_time = models.TimeField(auto_now=False)
-    pt_id = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
-    me_id = models.ForeignKey(Medical_Personal, on_delete=models.CASCADE, null=False)
 
+class medical_history(models.Model):
+    occupation = models.CharField(max_length=255)
+    congenital_disease = models.CharField(max_length=255, null=True)
+    fname_emergency = models.CharField(max_length=255)
+    lname_emergency = models.CharField(max_length=255)
+    address_emergency = models.TextField()
+    relationship_emergency = models.CharField(max_length=255)
+    phone_emergency = models.CharField(max_length=10)
+    account_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+class admission_note(models.Model):
+    admission_no = models.IntegerField()
+    patient_types = models.CharField(max_length=255)
+    weight = models.IntegerField()
+    height = models.IntegerField()
+    pressure = models.IntegerField()
+    drug_allergic = models.CharField(max_length=255, null=True)
+    symptoms = models.TextField()
+    create_date = models.DateField(auto_now=True)
+    patient = models.ForeignKey(User, on_delete=models.CASCADE)
