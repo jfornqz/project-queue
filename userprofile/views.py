@@ -18,7 +18,7 @@ def editprofile(request, num):
                 'user': user,
                 'patient': patient
             }
-    if request.method == 'POST':
+    if request.method == 'POST' and 'savepassword' in request.POST:
         if user.check_password(request.POST.get('password')) and request.POST.get('new_password')==request.POST.get('confirm_password'):
             user.set_password(request.POST.get('new_password'))
             user.save()
