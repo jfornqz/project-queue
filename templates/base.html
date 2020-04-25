@@ -13,7 +13,6 @@
   <!-- Site Title -->
   <title>Queue Reservation System KMITl</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -23,7 +22,6 @@
 			============================================= -->
   <link rel="stylesheet" href="/static/css/linearicons.css">
   <link rel="stylesheet" href="/static/css/owl.carousel.css">
-  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
   <link rel="stylesheet" href="/static/css/nice-select.css">
   <link rel="stylesheet" href="/static/css/magnific-popup.css">
   <link rel="stylesheet" href="/static/css/bootstrap.css">
@@ -34,12 +32,19 @@
     }
 
     body {
+      font-family: 'Kanit', sans-serif !important;
       background-image: url("/static/image/bgg.jpg");
       background-attachment: fixed;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
+      margin-top: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-bottom: 0px;
+      width:100%;
+
     }
 
     .navbar-brand {
@@ -85,82 +90,131 @@
       width: 100%;
 
     }
+
+    .footer {
+
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #355952; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1AA086; 
+}
+
+@font-face {
+    font-family: 'Kanit-Regular';
+    src: local('Kanit-Regular'),
+         url('{% static 'fonts/Kanit-Regular.ttf' %} format("truetype")');
+  }
+
+  h1 ,h2 ,h3 ,h4 ,h5 ,h6{
+    font-family: 'Kanit', sans-serif !important;
+  }
+
+  footer {
+  right: 0;bottom:0;left:0;
+  display: block;
+  
+}
+
+
   </style>
 
 </head>
 
-<body class="text-center ">
+<body class="text-center">
 
-  <div id="undefined-sticky-wrapper" class="sticky-wrapper" >
+  <div id="undefined-sticky-wrapper" class="sticky-wrapper">
 
-      <nav class=" navbar navbar-expand-lg navbar-light fixed-top navnav ">
-        <a class=" navbar-brand " href=" {% url 'index' %}">
-    Queue KMITL Clinic
-    </a>
-    <button class="navbar-toggler" type=" button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ml-auto">
-        {% if user.is_authenticated %}
-        <li class="nav-item align-self-center mr-5">
-          <h5 class="my-auto text-light mr-5">User: {{request.user.username}}</h5>
-        </li>
-        <div class="d-flex justify-content-center dropdown  show ">
-          <a class="btn btn-outline-create  dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
-            Queues
-          </a>
+    <nav class=" navbar navbar-expand-lg navbar-light fixed-top navnav ">
+      <a class=" navbar-brand " href=" {% url 'index' %}">
+        Queue KMITL Clinic
+      </a>
+      <button class="navbar-toggler" type=" button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item align-self-center mr-5">
+            <h5 class="my-auto text-light mr-5">User: {{request.user.username}}</h5>
+          </li>
+          <div class="d-flex justify-content-center dropdown  show ">
+            <a class="btn btn-outline-create  dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
+              Queues
+            </a>
 
-          <div class="dropdown-menu ">
-            <a class="dropdown-item" href="{% url 'start_queue' %}">Run Queues</a>
-            <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
-        </div>
-        <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
-          <a class="btn btn-outline-create  ml-5 dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
-            Patient Search
-          </a>
-
-          <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
-            <a class="dropdown-item" href="{% url 'search_appointment' %}">Create Appointment</a>
-            <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
-            <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
-            <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+            <div class="dropdown-menu ">
+              <a class="dropdown-item" href="{% url 'start_queue' %}">Run Queues</a>
+              <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
           </div>
-        </div>
-        <button onclick="window.location.href = {% url 'logout' %}" class="btn btn-outline-create mr-5">Logout</button>
-        {% else %}
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button onclick="window.location.href = {% url 'login' %}"
-            class="btn btn-outline-create my-2 my-sm-0">Login</button>
-          <button onclick="window.location.href = {% url 'register' %}"
-            class="btn btn btn-outline-create  my-2 my-sm-0">Sign
-            Up</button>
+          <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
+            <a class="btn btn-outline-create  ml-5 dropdown-toggle" href="#" data-toggle="dropdown"
+              aria-haspopup="true">
+              Patient Search
+            </a>
 
-        </div>
+            <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
+              <a class="dropdown-item" href="{% url 'search_appointment' %}">Create Appointment</a>
+              <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
+              <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
+              <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+            </div>
+          </div>
+          <button onclick="window.location.href = {% url 'changepassword' %}"
+            class="btn btn-outline-create mr-5">Change Password</button>
+          <button onclick="window.location.href = {% url 'logout' %}"
+            class="btn btn-outline-create mr-5">Logout</button>
+          {% else %}
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button onclick="window.location.href = {% url 'login' %}"
+              class="btn btn-outline-create my-2 my-sm-0">Login</button>
+            <button onclick="window.location.href = {% url 'register' %}"
+              class="btn btn btn-outline-create  my-2 my-sm-0">Sign
+              Up</button>
 
-    </div>
-    {% comment %} <li class="nav-item mypage align-self-center">
-      <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
-        <a class="nav-link" href="{% url 'login' %}">
-          <button class="btn btn-outline-dark my-2 my-sm-0" type="">Login</button>
-        </a>
-        <a class="nav-link" href="{% url 'register' %}">
-          <button class="btn btn-outline-dark my-2 my-sm-0" type="">Register</button>
-        </a>
+          </div>
+
       </div>
-    </li> {% endcomment %}
-    {% endif %}
-    </ul>
-    {% comment %} <ul class="nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}" style="font-size: 1.2em;">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'register' %}" style="font-size: 1.2em;">Sign Up</a>
-      </li>
-    </ul> {% endcomment %}
+      {% comment %} <li class="nav-item mypage align-self-center">
+        <div class="btn-toolbar" role="toolbar" aria-label="Basic example">
+          <a class="nav-link" href="{% url 'login' %}">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="">Login</button>
+          </a>
+          <a class="nav-link" href="{% url 'register' %}">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="">Register</button>
+          </a>
+        </div>
+      </li> {% endcomment %}
+      {% endif %}
+      </ul>
+      {% comment %} <ul class="nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}" style="font-size: 1.2em;">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}" style="font-size: 1.2em;">Sign Up</a>
+        </li>
+      </ul> {% endcomment %}
   </div>
   </nav>
   <script>$(function () {
@@ -170,18 +224,28 @@
       });
     });</script>
 
+
   {% block content %}
 
   {% endblock content %}
 
 
+  <!-- Footer -->
+  <footer class="navbar navbar-fixed-bottom mt-5" style="background-color: #E56C00; right: 0;bottom:0;left:0; "> 
 
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
-          href="https://twitter.com/mdo">@mdo</a>.</p>
+    <!-- Copyright -->
+    <div class="footer footer-copyright text-center py-4"
+      style="background-color: #E56C00; color: aliceblue; font-weight: normal; right: 0;bottom:0;left:0;  ">
+      <p>©2020 ระบบจองคิวคลินิกเวชกรรม (Queue reservationsystem of Medical Centre KMITL)</p>
+      <p>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
     </div>
+    <!-- Copyright -->
+
   </footer>
+  <!-- Footer -->
+
+
+
 </body>
 
 </html>

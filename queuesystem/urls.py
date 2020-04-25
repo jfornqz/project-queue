@@ -8,6 +8,7 @@ urlpatterns = [
     path('appointment_check/',  views.appointment_check, name='appointment_check'),
     path('search_appointment/',  views.search_appointment, name='search_appointment'),
     path('main_appointment/<int:num>/',  views.main_appointment, name='main_appointment'),
+    path('before_generatequeue/',  views.before_generatequeue, name='before_generatequeue'),
     path('generate_queue/',  views.generate_queue, name='generate_queue'),
     path('remaining_queue/',  views.remaining_queue, name='remaining_queue'),
     path('run_queue/',  views.run_queue, name='run_queue'),

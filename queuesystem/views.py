@@ -47,6 +47,13 @@ def remaining_queue(request):
     return render(request, 'queuesystem/remainingqueue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
+# หน้าก่อนจะเข้าสู่รับคิว จะต้องเช็คผู้ป่วยก่อน ว่ามีนัดกับหมอหรือไม่
+def before_generatequeue(request):
+    context = {}
+    return render(request, 'queuesystem/before_generatequeue.html', context)
+
+
+# ผู้ป่วยเห็นเท่านั้น
 # รับคิว
 def generate_queue(request):
     context = {}

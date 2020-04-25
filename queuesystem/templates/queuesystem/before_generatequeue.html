@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>                                    <script>
+                                        $(function () {
+                                            $('#row_dim').hide();
+                                            $('#type').change(function () {
+                                                if ($('#type').val() == 'มีนัด') {
+                                                    $('#row_dim').show();
+                                                } else {
+                                                    $('#row_dim').hide();
+                                                }
+                                            });
+                                        });
+
+                                        $(function () {
+                                            $('#row_show').hide();
+                                            $('#type').change(function () {
+                                                if ($('#type').val() == 'มีนัด') {
+                                                    $('#row_show').show();
+                                                } else {
+                                                    $('#row_show').hide();
+                                                }
+                                            });
+                                        });
+
+
+
+
+                                    </script>
+                                    </head>
+<style>
+    .row {
+
+        vertical-align: baseline;
+
+    }
+</style>
+<form action="{% url 'generate_queue' %}" method="POST">
+    {% csrf_token %}
+    <div class="container mt-5 ">
+        <div class="row flex-lg-nowrap mt-5">
+            <div class="col mx-auto mt-5">
+                <div class="row text-center">
+                    <div class="col-10 mb-3  d-block mx-auto ">
+                        <div class="card ">
+                            <div class="card-body">
+                                <div class="e-profile  text-center">
+                                    <div class="row  text-center  d-block mx-auto">
+                                        คุณมีนัดพบแพทย์หรือไม่
+                                        <select name="type" id="type" class=" form-control d-block mx-auto mt-1"
+                                            style="margin-left:57px; width:153px;">
+                                            <option name="มีนัด" value="ไม่มีนัด">ไม่มีนัด</option>
+                                            <option name="มีนัด" value="มีนัด">มีนัด</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row mx-auto justify-content-center mt-3" id="row_dim">
+                                        กรุณาเลือกชื่อของแพทย์จากในใบนัดของคุณ</div>
+                                    <div class="row" id="row_show">
+                                        <select class="form-control d-block mx-auto mt-1"
+                                            style="margin-left:57px; width:153px;">
+                                            <option name="d1" value="d1">หมอ ก</option>
+                                            <option name="d2" value="d2">หมอ ข</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <small style="color: crimson;">**หากไม่ทราบว่านัดกับแพทย์คนใด
+                                                กรุณาเช็คในหน้า
+                                                การนัดของคุณ (Your Appointment)</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                                <button class="btn btn-success mt-3 " type="submit">Generate queue</button>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+{% endblock content %}

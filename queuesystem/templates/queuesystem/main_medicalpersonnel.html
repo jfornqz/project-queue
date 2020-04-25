@@ -1,245 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
 <style>
-body{
-	      background-image: url("/static/image/bgg.jpg");
+	body {
+		background-image: url("/static/image/bgg.jpg");
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
 
-}
 
-
+	}
 </style>
 
 <!-- start banner Area -->
-					
-				<div class="slider"><div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-				        <div class="carousel-inner" role="listbox">
-				          <!-- Slide One - Set the background image for this slide in the line below -->
-				          <div class="carousel-item active" style=" background-image: url('/static/image/s1.jpg');">
-				            <div class="carousel-caption  d-md-block ">
-                            
-				              <h2 class="text-uppercase" style=" text-shadow: 2px 2px 10px black;">ระบบจองคิวคลินิกเวชกรรม KMITL</h2>
-                                <h3  class="text-uppercase" style="text-shadow: 2px 2px 10px black; color:white;">(Queue reservation system of Medical Centre KMITL)</h3>
-				            </div>
-				          </div>
+<section class="pt-50 ">
+<div class="slider">
+	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner" role="listbox">
+			<!-- Slide One - Set the background image for this slide in the line below -->
+			<div class="carousel-item active mt-5"
+				style=" background-image: url('/static/image/doc.jpg'); background-size: cover;">
+					<div class="row justify-content-center mt-5 ">
+						<div class="col  mx-auto ">
+							<h2 class="text-center  mt-5" style="color: #E45B07;">หมายเลขคิวปัจจุบัน</h2>
+							<h4 style="color: #E45B07; font-size: 10rem;">10</h4>
 
-				          <!-- Slide Three - Set the background image for this slide in the line below -->
-				          <div class="carousel-item" style="background-image: url('/static/image/s3.jpg')">
-				            <div class="carousel-caption d-md-block">
-                            <div style="background-color:black; opacity:0.8;">
-				              <h2 class="text-uppercase text-center" style=" text-shadow: 2px 2px 10px black;">คลินิกเวชกรรม KMITL เปิดให้บริการจองคิว&nbsp;Online&nbsp;ผ่าน Web Application  ได้แล้ววันนี้</h2>
-				              <h4 class="text-uppercase text-center" style="color:white; text-shadow: 2px 2px 10px black;">
-								โดยเพียงทำการ Register ก่อน login ท่านก็สามารถทำการจองคิวออนไลน์ได้
-				              </h4>
-                              </div>
-				            </div>
-                          </div>
-                          				          <!-- Slide Two - Set the background image for this slide in the line below -->
-				          <div class="carousel-item" style="background-image: url('/static/image/s2.jpg')">
-				           
-				          </div>
-				        </div>
-                        
-				        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-				          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				          <span class="sr-only">Previous</span>
-				        </a>
-				        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-				          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-				          <span class="sr-only">Next</span>
-				        </a>
-				      </div>
+						</div>
+					</div>
+						
+				
 				</div>
 
-			<!-- End banner Area -->	
 
-			<!-- Start About Area -->
-			<section class="About-area section-gap" id="about">
-				<div class="container">
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-6 about-left">
-							<img class="img-fluid" src="img/about-img.jpg" alt="">
-						</div>
-						<div class="col-lg-6 about-right">
-							<h1>
-								We Believe that <br>
-								Interior beautifies the
-							</h1>
-							<p>
-								inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially in the workplace. That’s why it’s crucial that, as women, our behavior on the job is beyond reproach. inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially in the workplace. That’s why it’s crucial that.
-							</p>
-							<button class="submit-btn primary-btn mt-20 text-uppercase ">Hire me now<span class="lnr lnr-arrow-right"></span></button>
-						</div>
-					</div>
-				</div>	
-			</section>
-			<!-- End About Area -->
 
-			<!-- Start gallery Area -->
-			<section class="gallery-area section-gap" id="gallery">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-8 pb-30 header-text">
-							<h1 class="text-white">My Recent Photos</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> labore  et dolore magna aliqua.
-							</p>
-						</div>
-					</div>
-					<div class="gal">
-						<a href="img/p1.jpg"><img src="img/p1.jpg" alt=""></a>
-						<a href="img/p2.jpg"><img src="img/p2.jpg" alt=""></a>
-						<a href="img/p3.jpg"><img src="img/p3.jpg" alt=""></a>
-						<a href="img/p4.jpg"><img src="img/p4.jpg" alt=""></a>
-						<a href="img/p5.jpg"><img src="img/p5.jpg" alt=""></a>
-						<a href="img/p6.jpg"><img src="img/p6.jpg" alt=""></a>
-						<a href="img/p7.jpg"><img src="img/p7.jpg" alt=""></a>
-						<a href="img/p8.jpg"><img src="img/p8.jpg" alt=""></a>
-						<a href="img/p9.jpg"><img src="img/p9.jpg" alt=""></a>
-						<a href="img/p10.jpg"><img src="img/p10.jpg" alt=""></a>
-						<a href="img/p11.jpg"><img src="img/p11.jpg" alt=""></a>
-						<a href="img/p12.jpg"><img src="img/p12.jpg" alt=""></a>
-						<a href="img/p13.jpg"><img src="img/p13.jpg" alt=""></a>
-						<a href="img/p14.jpg"><img src="img/p14.jpg" alt=""></a>
-						<a href="img/p15.jpg"><img src="img/p15.jpg" alt=""></a>
-						<a href="img/p16.jpg"><img src="img/p16.jpg" alt=""></a>
-										
-					</div>
-				</div>
-			</section>
+			</div>
 
-			<!-- Start callto Area -->
-			<section class="callto-area pt-50 pb-50">
-				<div class="container">
-					<div class="row">
-						 <div class="col-lg-9 callto-left">
-						 	<h1 class="text-uppercase">Not sure about my charge?</h1>
-						 </div>
-						 <div class="col-lg-3 callto-right">
-						 	<a href="#" class="btn-white btn text-uppercase">Donate Now</a>
-						 </div>
-					</div>
-				</div>	
-			</section>
-			<!-- End callto Area -->
 
-			<!-- Start blog Area -->
-			<section class="blog-area section-gap" id="blog">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-8 pb-30 header-text">
-							<h1>Our Recent Blogs</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> labore  et dolore magna aliqua.
-							</p>
-						</div>
-					</div>
-					<div class="row">	
-						<div class="single-blog col-lg-4 col-md-4">
+		</div>
+	</div>
+</div>
+</section>
 
-							<img class="f-img img-fluid mx-auto" src="img/b1.jpg" alt="">
-							<h4>
-								<a href="#">Portable Fashion for young women</a>
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exea.
-								 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>
-						</div>
-						<div class="single-blog col-lg-4 col-md-4">
-							<img class="f-img img-fluid mx-auto" src="img/b2.jpg" alt="">
-							<h4>
-								<a href="#">Summer ware are coming</a>
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exea.
- 								commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>
-						</div>
-						<div class="single-blog col-lg-4 col-md-4">
-							<img class="f-img img-fluid mx-auto" src="img/b3.jpg" alt="">
-							<h4>
-								<a href="#">Summer ware are coming</a>
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>
-						</div>												
-					</div>
-				</div>	
-			</section>
-			<!-- end blog Area -->	
 
-			<!-- Start contact Area -->
-			<section class="contact-area" id="contact">
-				<div class="container-fluid">
-					<div class="row d-flex justify-content-end align-items-center">
-						<div class="col-lg-5 col-md-12 contact-left no-padding">
-							<img class="img-fluid" src="img/contact-img.jpg" alt="">
-						</div>
-						<div class="col-lg-7 col-md-12 contact-right no-padding">
-							<h1>Send me Message</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
-							</p>
-							<form class="booking-form" id="myForm" action="contact.php">
-								 	<div class="row">
-								 		<div class="col-lg-12 d-flex flex-column">
-							 				<input name="name" placeholder="Your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your name'" class="form-control mt-20" required="" type="text" required>
-								 		</div>
-							 			<div class="col-lg-12 d-flex flex-column">
-											<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mt-10" required="" type="email">
-										</div>									
-										<div class="col-lg-12 flex-column">
-											<textarea class="form-control mt-20" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-										</div>
-										
-										<div class="col-lg-12 d-flex justify-content-end send-btn">
-											<button class="submit-btn primary-btn mt-20 text-uppercase ">confirm booking<span class="lnr lnr-arrow-right"></span></button>
-										</div>
+<!-- Start About Area -->
+<section class="About-area section-gap img-fluid"
+	style="background-image: url('/static/image/20437099.jpg'); background-size: cover; overflow: hidden;">
+	<div class="row">
+		<div class="col">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/000.png" class="img-fluid">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/pp2-370x553.png">
+		</div>
+		<div class="col">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/01mon.png" class="img-fluid"
+				width="auto;">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/02tue.png" class="img-fluid"
+				width="auto;">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/03wed.png" class="img-fluid"
+				width="auto;">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/04thu.png" class="img-fluid"
+				width="auto;">
+			<img src="http://medicalcenter.kmitl.ac.th/wp-content/uploads/2019/05/05fri.png" class="img-fluid"
+				width="auto;">
+		</div>
+	</div>
+</section>
 
-										<div class="alert-msg"></div>		
-									</div>
-					  		</form>
-							</div>
-						</div>						
-					</div>
-				</div>	
-			</section>
-			<!-- End contact Area -->
+
 
 
 {% endblock content %}
