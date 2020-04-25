@@ -18,7 +18,7 @@
             <form method="POST" action="{% url 'search' %}">
                 {% csrf_token %}
                     <div class="row">
-                            {{ filter.form.as_p }}
+                        {{ filter.form.as_p }}
                     </div>
                     <button class="btn btn-info btn-block col-12 h-100" id='seach_bt' type="submit">Search</button>
             </form>
@@ -28,14 +28,16 @@
 
             <div class="list-group col-12  mx-auto d-block">
                 <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะรหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
-        
+            
                 {% for user in filter.qs %}
                 <div class="text-left">
+                    <a href="{% url 'editprofile' user.id %}">
                     <button type="button" class="list-group-item list-group-item-action">
                         <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ user.id }}: </font> &nbsp;&nbsp;{{ user.get_full_name }}
                     </button>
                 </div>
                 {% endfor %}
+
             </div>
             <br>
         </div>
