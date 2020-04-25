@@ -12,8 +12,10 @@ class Patient(models.Model):
     dob = models.DateField(auto_now=False)
     blood_type = models.CharField(max_length=3)
     address = models.TextField()
+    picture = models.ImageField(upload_to='gallery', null=True)
     account_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 class Medical_Personal(models.Model):
     position = models.CharField(max_length=255)
+    picture = models.ImageField(upload_to='gallery', null=True)
     account_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

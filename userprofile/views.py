@@ -28,6 +28,27 @@ def editprofile(request, num):
             context.update({'msg' : 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'})
         else:
             context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+
+    elif request.method == 'POST' and 'saveprofile' in request.POST:
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        today = datetime.today()
+        birth = datetime.strptime(request.POST.get('dob'), '%Y-%m-%d')
+        if birth < today:
+            patient.phone = request.POST.get('phone')
+            patient.address = request.POST.get('address')
+            patient.dob = birth
+            patient.age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+            patient.save()
+            context.update({'msg' : 'บันทึกสำเร็จ!!!'})
+        else:
+            context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+
+    elif request.method == 'POST' and 'savepicture' in request.POST:
+        patient.picture = request.FILES['picture']
+        patient.save()
     return render(request, 'userprofile/editprofile.html', context)
 
 # def search(request):
