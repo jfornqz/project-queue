@@ -1,47 +1,65 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
 
+.navnav{
+  background-color:#D65D20; 
+  width: 100%;
+
+}
+
+</style>
 <div class="container ">
     <div class="row mt-5">
         <div class="col mt-5">
+            <form action="{% url 'search' %}" method="POST">
+                {% csrf_token %}
+            <div class="row">
+                    <div class="col-1 text-right mr-1"> <i><img src="/static/image/search.png"></img></i></div>
+                    <div class="col-10 ml-2"><input class="form-control col-12 d-block " type="text"
+                            placeholder="ค้นหารายชื่อผู้ป่วย">
+                        <small style="color: red;">** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อผู้ป่วยเท่านั้น</small>
+                    </div>
 
-            {% comment %} <form role="form" method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-10 ml-2">
-                        <input class="form-control col-12 d-block" type="text" name='search' id="search" placeholder="ค้นหารายชื่อผู้ป่วย">
-                        <small style="color: red;">*** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อผู้ป่วยเท่านั้น ***</small>
-                    </div>
-                    <input type="submit" value="search" class="btn btn-info btn-block col-1 h-75" id='seach_bt'> 
-                </div>
-			</form>{% endcomment %}
-            <form method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                    <div class="row">
-                            {{ filter.form.as_p }}
-                    </div>
-                    <button class="btn btn-info btn-block col-12 h-100" id='seach_bt' type="submit">Search</button>
+            </div>
             </form>
-            {% comment %} <small style="color: red;">*** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อผู้ป่วยเท่านั้น ***</small> {% endcomment %}
-            <br>
             <br>
 
+
+            {% if search %}
             <div class="list-group col-12  mx-auto d-block">
-                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะรหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
-        
-                {% for user in filter.qs %}
+                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะ
+                    รหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
+                {% for id, user in result %}
                 <div class="text-left">
                     <button type="button" class="list-group-item list-group-item-action">
-                        <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ user.id }}: </font> &nbsp;&nbsp;{{ user.get_full_name }}
+                        <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{id.id}}</font>&nbsp;&nbsp;{{user.first_name}}&nbsp;{{user.last_name}}
                     </button>
                 </div>
                 {% endfor %}
             </div>
-            <br>
         </div>
     </div>
 </div>
 
+            {% else %}
+            <div class="list-group col-12  mx-auto d-block">
+                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะ
+                    รหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
+                 {% for id, user in result %}
+                <div class="text-left">
+                    <a href="{% url 'editprofile' user.id %}">
+                    <button type="button" class="list-group-item list-group-item-action">
+                        <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{id.id}}</font>&nbsp;&nbsp;{{user.first_name}}&nbsp;{{user.last_name}}
+                    </button>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif%}
 
 
 
