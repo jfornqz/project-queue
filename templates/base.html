@@ -31,6 +31,7 @@
       scroll-behavior: smooth;
     }
 
+
     body {
       font-family: 'Kanit', sans-serif !important;
       background-image: url("/static/image/bgg.jpg");
@@ -44,6 +45,8 @@
       margin-right: 0px;
       margin-bottom: 0px;
       width:100%;
+      height:100%;
+      
 
     }
 
@@ -91,12 +94,12 @@
 
     }
 
-    .footer {
+    .footer{
 
-      left: 0;
-      bottom: 0;
-      width: 100%;
-    }
+  bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
 
     /* width */
 ::-webkit-scrollbar {
@@ -129,17 +132,22 @@
   }
 
   footer {
-  right: 0;bottom:0;left:0;
-  display: block;
+  right: 0;
+  bottom:0;
+  left:0;
+  text-align: center;
+  width: 100%;
   
 }
+
+
 
 
   </style>
 
 </head>
 
-<body class="text-center">
+<body class="text-center" style="width:100%; height:100%;">
 
   <div id="undefined-sticky-wrapper" class="sticky-wrapper">
 
@@ -154,36 +162,51 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
-          <li class="nav-item align-self-center mr-5">
-            <h5 class="my-auto text-light mr-5">User: {{request.user.username}}</h5>
-          </li>
-          <div class="d-flex justify-content-center dropdown  show ">
-            <a class="btn btn-outline-create  dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
-              Queues
-            </a>
+              <li class="nav-item align-self-center mr-5">
+                <h5 class="my-auto text-light mr-5">User: {{request.user.username}}</h5>
+              </li>
+            {% if perms.userprofile.add_medical_history%}
+                {% if user.is_superuser %}
+                <button onclick="window.location.href = {% url 'register_med' %}"
+                    class="btn btn-outline-create mr-5">Sign Up for Medicalpersonnel</button>
+                {% else %}
+                <div class="d-flex justify-content-center dropdown  show ">
+                  <a class="btn btn-outline-create  dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true">
+                    Queues
+                  </a>
 
-            <div class="dropdown-menu ">
-              <a class="dropdown-item" href="{% url 'start_queue' %}">Run Queues</a>
-              <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
-          </div>
-          <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
-            <a class="btn btn-outline-create  ml-5 dropdown-toggle" href="#" data-toggle="dropdown"
-              aria-haspopup="true">
-              Patient Search
-            </a>
+                  <div class="dropdown-menu ">
+                    <a class="dropdown-item" href="{% url 'start_queue' %}">Run Queues</a>
+                    <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
+                </div>
+                <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
+                  <a class="btn btn-outline-create  ml-5 dropdown-toggle" href="#" data-toggle="dropdown"
+                    aria-haspopup="true">
+                    Patient Search
+                  </a>
 
-            <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
-              <a class="dropdown-item" href="{% url 'search_appointment' %}">Create Appointment</a>
-              <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
-              <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
-              <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+                  <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
+                    <a class="dropdown-item" href="{% url 'search_appointment' %}">Create Appointment</a>
+                    <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
+                    <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
+                    <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+                  </div>
             </div>
-          </div>
-          <button onclick="window.location.href = {% url 'changepassword' %}"
-            class="btn btn-outline-create mr-5">Change Password</button>
+            <button onclick="window.location.href = {% url 'changepassword' %}"
+                    class="btn btn-outline-create mr-5">Change Password</button>
+          {% endif %}
+            {% elif perms.queuesystem.add_queue_system %}
+                  <button onclick="window.location.href = {% url 'before_generatequeue' %}"
+                    class="btn btn-outline-create mr-5">Generate queue</button>
+                  <button onclick="window.location.href = {% url 'appointment_check' %}"
+                    class="btn btn-outline-create mr-5">Check Appointment</button>
+                  <button onclick="window.location.href = {% url 'editprofile' %}"
+                    class="btn btn-outline-create mr-5">Editprofile</button>  
+                
+          {% endif %}
           <button onclick="window.location.href = {% url 'logout' %}"
-            class="btn btn-outline-create mr-5">Logout</button>
+                    class="btn btn-outline-create mr-5">Logout</button>
           {% else %}
           <div class="btn-group" role="group" aria-label="Basic example">
             <button onclick="window.location.href = {% url 'login' %}"
@@ -222,7 +245,11 @@
         var $nav = $(".navbar-fixed-top");
         $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
       });
-    });</script>
+    });
+    
+
+    
+    </script>
 
 
   {% block content %}
@@ -231,10 +258,10 @@
 
 
   <!-- Footer -->
-  <footer class="navbar navbar-fixed-bottom mt-5" style="background-color: #E56C00; right: 0;bottom:0;left:0; "> 
+  <footer class="footer mt-5" style="background-color: #E56C00; right: 0;bottom:0;left:0; "> 
 
     <!-- Copyright -->
-    <div class="footer footer-copyright text-center py-4"
+    <div class="footer-copyright  text-center py-4"
       style="background-color: #E56C00; color: aliceblue; font-weight: normal; right: 0;bottom:0;left:0;  ">
       <p>©2020 ระบบจองคิวคลินิกเวชกรรม (Queue reservationsystem of Medical Centre KMITL)</p>
       <p>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>

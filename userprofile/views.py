@@ -6,14 +6,25 @@ from django import forms
 from authen.models import Medical_Personal, Patient
 from datetime import date, datetime
 from .filters import UserFilter
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group, User
 
-
+@login_required
+def patientprofile(request, num):
+    user = User.objects.get(pk=num)
+    patient = Patient.objects.get(account_id_id=num)
+    context = {
+                'user': user,
+                'patient': patient
+            }
+    return render(request, 'userprofile/patientprofile.html', context)
 
 
 # Create your views here.
-def editprofile(request, num):
-    user = User.objects.get(pk=num)
-    patient = Patient.objects.get(account_id_id=num)
+@login_required
+def editprofile(request):
+    # user = 
+    # patient = Patient.objects.get(account_id_id=id)
     context = {
                 'user': user,
                 'patient': patient
@@ -27,7 +38,7 @@ def editprofile(request, num):
                 login(request, user)
             context.update({'msg' : 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'})
         else:
-            context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+            context.update({'msgg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
 
     elif request.method == 'POST' and 'saveprofile' in request.POST:
         user.first_name = request.POST.get('first_name')
@@ -44,7 +55,7 @@ def editprofile(request, num):
             patient.save()
             context.update({'msg' : 'บันทึกสำเร็จ!!!'})
         else:
-            context.update({'msg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+            context.update({'msgg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
 
     elif request.method == 'POST' and 'savepicture' in request.POST:
         patient.picture = request.FILES['picture']
@@ -67,6 +78,8 @@ def editprofile(request, num):
 
 #     }
 #     return render(request, 'userprofile/search.html', context)
+@login_required
+@permission_required('userprofile.add_medical_history')
 def search(request):
     search = User.objects.all()
     user_filter = UserFilter(request.POST, queryset=search)
@@ -74,6 +87,8 @@ def search(request):
     
     return render(request, 'userprofile/search.html', {'filter': user_filter})
 
+@login_required
+@permission_required('userprofile.add_medical_history')
 def admittedpatienthistory(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
@@ -84,6 +99,8 @@ def admittedpatienthistory(request, num):
     }
     return render(request, 'userprofile/admittedpatienthistorycreate.html', context)
 
+@login_required
+@permission_required('userprofile.add_medical_history')
 def search_foradmitted(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)

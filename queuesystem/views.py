@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django import forms
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group, User
 from authen.models import Medical_Personal, Patient
 from datetime import date, datetime
 
@@ -16,12 +18,16 @@ def index(request):
 
 # ผู้ป่วยเห็นเท่านั้น
 # index ผู้ป่วย (เด้งมาจากเวลาผู้ป่วย login)
+@login_required
+@permission_required('queuesystem.add_queue_system')
 def main_patient(request):
     context = {}
     return render(request, 'queuesystem/main_patient.html', context)
 
 # บุคลากรคลินิกเห็นเท่านั้น
 # index บุคลากรคลินิก (เด้งมาจากเวลาบุคลากรคลินิก login)
+@login_required
+@permission_required('userprofile.add_medical_history')
 def main_medicalpersonnel(request):
     context = {}
     return render(request, 'queuesystem/main_medicalpersonnel.html', context)
@@ -29,6 +35,8 @@ def main_medicalpersonnel(request):
 
 # บุคลากรคลินิก เห็นเท่านั้น
 # หน้า start queue > คลิ๊กไปปุ๊ปจะเข้าสู่หน้า run queue
+@login_required
+@permission_required('userprofile.add_medical_history')
 def start_queue(request):
     context = {}
     return render(request, 'queuesystem/startqueue.html', context)
@@ -36,18 +44,24 @@ def start_queue(request):
 
 # บุคลากรคลินิก เห็นเท่านั้น
 # รันคิว
+@login_required
+@permission_required('userprofile.add_medical_history')
 def run_queue(request):
     context = {}
     return render(request, 'queuesystem/runqueue.html', context)
 
 # บุลคากรคลินิก เห็นเท่านั้น
 # แสดงคิวที่เหลืออยู่
+@login_required
+@permission_required('userprofile.add_medical_history')
 def remaining_queue(request):
     context = {}
     return render(request, 'queuesystem/remainingqueue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
 # หน้าก่อนจะเข้าสู่รับคิว จะต้องเช็คผู้ป่วยก่อน ว่ามีนัดกับหมอหรือไม่
+@login_required
+@permission_required('queuesystem.add_queue_system')
 def before_generatequeue(request):
     context = {}
     return render(request, 'queuesystem/before_generatequeue.html', context)
@@ -55,12 +69,16 @@ def before_generatequeue(request):
 
 # ผู้ป่วยเห็นเท่านั้น
 # รับคิว
+@login_required
+@permission_required('queuesystem.add_queue_system')
 def generate_queue(request):
     context = {}
     return render(request, 'queuesystem/generatequeue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
 # หน้าเช็คการนัดของผู้ป่วย (แสดงการนัดทั้งหมดของผู้ป่วย) มีการนัดทั้งหมดของผู้ป่วย คลิ๊กไปเข้าจะเป็นหน้า main_appointment
+@login_required
+@permission_required('queuesystem.add_queue_system')
 def appointment_check(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)
@@ -80,6 +98,8 @@ def appointment_check(request):
 
 # บุคลากรคลินิกเห็นเท่านั้น
 # หน้าสร้างการนัด 
+@login_required
+@permission_required('userprofile.add_medical_history')
 def appointment_create(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
@@ -91,6 +111,8 @@ def appointment_create(request, num):
 
 # บุคลากรคลินิกดูได้เท่านั้น
 # ค้นหารายชื่อผู้ป่วย เพื่อสร้างการนัด (next page > appointmentcreate)
+@login_required
+@permission_required('userprofile.add_medical_history')
 def search_appointment(request):
     search = request.POST.get('search', '')
     first_name_patient = User.objects.filter(first_name__icontains=search)
@@ -110,6 +132,8 @@ def search_appointment(request):
 
 # ผู้ป่วยเห็นเท่านั้น
 # หน้า main ของ appointment เวลาผู้ป่วยดูรายละเอียดการนัด
+@login_required
+@permission_required('queuesystem.add_queue_system')
 def main_appointment(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
