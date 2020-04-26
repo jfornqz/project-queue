@@ -316,29 +316,31 @@
                       <div class="col">
                         <!-- div ดูประวัติเข้ารับการรักษา -->
                         <h4 class="text-center mb-3">ประวัติเข้ารับการรักษา</h4>
+                        {% for i in admit %}
                         <div class="accordion " id="accordionExample">
-
+                        
                           <div class="card">
                             <div class="card-header" id="headingOne">
                               <h2 class="mb-0">
                                 <!-- ให้แสดงวันที่แต่ละครั้งที่มาทำการรักษา -->
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                  วันที่ 12/03/62
+                                  data-target="#admit{{i.id}}" aria-expanded="true" aria-controls="collapseOne">
+                                  ตรวจครั้งที่ {{i.admission_no}} | วันที่ {{i.create_date}}
                                 </button>
                                 <!-- จบวันที่ที่แสดง -->
                               </h2>
                             </div>
+                        
 
                             <!-- แสดงข้อมูลข้างใน -->
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                            <div id="admit{{i.id}}" class="collapse" aria-labelledby="headingOne"
                               data-parent="#accordionExample">
                               <div class="card-body">
                                 <div class="row">
                                   <div class="col">
                                     <div class="form-group">
                                       <label>No.(ตรวจครั้งที่)</label>
-                                      <input class="form-control" type="text" name="admission_no" value="" disabled>
+                                      <input class="form-control text-center text-center" type="text" name="admission_no" value="{{i.admission_no}}" disabled>
                                     </div>
                                   </div>
                                   <div class="col">
@@ -354,13 +356,13 @@
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Weight (น้ำหนัก)</label>
-                                      <input class="form-control" type="text" name="weight" value="" disabled>
+                                      <input class="form-control text-center" type="text" name="weight" value="{{i.weight}}" disabled>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Height (ส่วนสูง)</label>
-                                      <input class="form-control" type="text" name="height" value="" disabled>
+                                      <input class="form-control text-center" type="text" name="height" value="{{i.height}}" disabled>
                                     </div>
                                   </div>
                                 </div>
@@ -368,13 +370,13 @@
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Blood Pressure (ค่าความดัน)</label>
-                                      <input class="form-control" type="text" name="pressure" value="" disabled>
+                                      <input class="form-control text-center" type="text" name="pressure" value="{{i.pressure}}" disabled>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Drug Allergy (การแพ้ยา)</label>
-                                      <input class="form-control" type="text" name="drug_allergy" value="" disabled>
+                                      <input class="form-control text-center" type="text" name="drug_allergy" value="{{i.drug_allergy}}" disabled>
                                     </div>
                                   </div>
                                 </div>
@@ -382,7 +384,7 @@
                                   <div class="col mb-3">
                                     <div class="form-group">
                                       <label>Symptoms (อาการที่พบ)</label>
-                                      <textarea class="form-control " rows="2" name="symptoms" disabled></textarea>
+                                      <input class="form-control text-center" rows="2" name="symptoms" value="{{i.symptoms}}" disabled>
                                     </div>
                                   </div>
                                 </div>
@@ -390,7 +392,9 @@
                             </div>
                             <!-- จบข้อมูลที่แสดง -->
                           </div>
+                        
                         </div>
+                        {% endfor %}
 
                         <!-- ปิด div  Admission note -->
                       </div>

@@ -33,15 +33,14 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>No.(ตรวจครั้งที่)</label>
-                                                <input class="form-control" type="text" name="admission_no"
-                                                    placeholder="กรุณาใส่เป็นตัวเลข เช่น 1">
+                                                <input class="form-control text-center" type="text" name="admission_no" value="{{next_no}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Patient Types (ประเภทผู้ป่วย)</label>
                                                 <select class="custom-select required d-block  mx-auto "
-                                                    name="name_title" style="width:auto;" required>
+                                                    name="patient_types" style="width:auto;" required>
                                                     <option selected disabled>กรุณาเลือกประเภทผู้ป่วย / Select Patient
                                                         types
                                                     </option> ----</option>
@@ -55,13 +54,13 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Weight (น้ำหนัก)</label>
-                                                <input class="form-control" type="text" name="weight" value="">
+                                                <input class="form-control text-center" type="number" name="weight" value="">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Height (ส่วนสูง)</label>
-                                                <input class="form-control" type="text" name="height" value="">
+                                                <input class="form-control text-center" type="number" name="height" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -69,13 +68,13 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Blood Pressure (ค่าความดัน)</label>
-                                                <input class="form-control" type="text" name="blood" value="">
+                                                <input class="form-control text-center" type="number" name="pressure" value="">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Drug Allergy (การแพ้ยา)</label>
-                                                <input class="form-control" type="text" name="allergy" value="">
+                                                <input class="form-control text-center" type="text" name="allergy" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +82,8 @@
                                         <div class="col mb-3">
                                             <div class="form-group">
                                                 <label>Symptoms (อาการที่พบ)</label>
-                                                <textarea class="form-control " rows="2" name=""></textarea>
+                                                <input class="form-control text-center" type="text" name="symptoms" value="">
+                                                {% comment %} <textarea class="form-control" rows="2" name="symptoms"></textarea> {% endcomment %}
                                             </div>
                                         </div>
                                     </div>

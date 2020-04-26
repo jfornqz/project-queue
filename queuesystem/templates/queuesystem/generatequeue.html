@@ -5,14 +5,13 @@
 <div class="row  mt-5 ">
 <div class="col  mt-5 ">
 <h1 class=" text-black" style="font-size: 1.7em; ">หมายเลขคิวของคุณคือ</h1>
-                <h1 class="text-black" style="font-size: 10vw; ">1 </h1>
+                <h1 class="text-black" style="font-size: 10vw; ">{{my_queue.queue_no}} </h1>
                 <p>
-                    วันที่ : วันนี้
+                    วันที่ : {{my_queue.date}}
                 </p>
                 <p>
-                    เวลา : วันนี้
+                    เวลา : {{my_queue.time}}
                 </p>
-</div>
 </div>
 </div>
 {% endblock content %}

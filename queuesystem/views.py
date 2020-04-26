@@ -7,6 +7,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User
 from authen.models import Medical_Personal, Patient
+from .models import Queue_System, Appointment
 from datetime import date, datetime
 
 
@@ -73,6 +74,25 @@ def before_generatequeue(request):
 @permission_required('queuesystem.add_queue_system')
 def generate_queue(request):
     context = {}
+    user = request.user
+    today = datetime.today()
+    queue = Queue_System.objects.filter(date=today)
+    amount = queue.count()
+    latest = queue.filter(create_by_id=user.id, status=0)
+    next_queue = amount+1
+    if latest:
+        context = {
+            'my_queue' : latest.get(create_by_id=user.id, status=0),
+        }
+    else:
+        my_queue = Queue_System.objects.create(
+            queue_no = next_queue,
+            status = False,
+            create_by_id = user.id
+        )
+        context = {
+            'my_queue' : my_queue,
+        }
     return render(request, 'queuesystem/generatequeue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
@@ -80,20 +100,24 @@ def generate_queue(request):
 @login_required
 @permission_required('queuesystem.add_queue_system')
 def appointment_check(request):
-    search = request.POST.get('search', '')
-    first_name_patient = User.objects.filter(first_name__icontains=search)
-    id_patient = User.objects.filter(id__icontains=search)
-    result = zip(id_patient, first_name_patient)
-    # if id_patient.exists():
-    #    result = zip(id_patient, first_name_patient)
+    user = request.user
     context = {
-        'firstname_patient' : first_name_patient,
-        'id_patient' : id_patient,
-        'result' : result,
-        'search' : search,
-
-
+        'user' : user
     }
+    name_list = []
+    appointment = Appointment.objects.filter(pt_id_id=user.id)
+    if appointment:
+        for i in appointment:
+            med = Medical_Personal.objects.get(account_id_id=i.me_id_id)
+            med_name = med.account_id.first_name
+            name_list.append(med_name)
+        my_list = zip(appointment, name_list)
+        context.update({
+            'appointment' : appointment,
+            'name_list' : name_list,
+            'my_list' : my_list
+            })
+        print(name_list)
     return render(request, 'queuesystem/appointmentcheck.html', context)
 
 # บุคลากรคลินิกเห็นเท่านั้น
@@ -135,11 +159,16 @@ def search_appointment(request):
 @login_required
 @permission_required('queuesystem.add_queue_system')
 def main_appointment(request, num):
-    user = User.objects.get(pk=num)
-    patient = Patient.objects.get(account_id_id=num)
+    user = request.user
+    patient = Patient.objects.get(account_id_id=user.id)
+    appointment = Appointment.objects.get(app_id=num)
+    med = Medical_Personal.objects.get(account_id_id=appointment.me_id_id)
+    med_name = med.account_id.first_name
     context = {
                 'user': user,
-                'patient': patient
+                'patient': patient,
+                'appointment' : appointment,
+                'med_name' : med_name
             }
     return render(request, 'queuesystem/mainappointment.html', context)
 

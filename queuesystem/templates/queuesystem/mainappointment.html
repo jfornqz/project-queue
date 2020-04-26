@@ -21,23 +21,24 @@
                                 <form action="" method="POST">
                                     {% csrf_token %}
                                     <h4 class="card-title">Your Appointment</h4>
-                                    <p class="card-title">การนัดของคุณ ในวันที่ ... เวลาประมาณการ ....</p>
+                                    <p class="card-title">การนัดของคุณ ในวันที่ {{appointment.next_date}} เวลาประมาณการ {{appointment.app_time}}</p>
                                     <h5 class="card-title" style="color: tomato;">รหัสผู้ป่วย :
                                         {{patient.account_id_id}}</h5>
                                     <h5 class="card-title" style="color: tomato;">ชื่อผู้ป่วย :
+                                        {{user.first_name}}&nbsp;{{user.last_name}}
                                         &nbsp;</h5>
 
                                     <div class="row mt-5">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>นัดพบแพทย์</label>
-                                                <input class="form-control" type="text" name="" value="" disabled>
+                                                <input class="form-control text-center" type="text" name="" value="{{med_name}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Time (เวลาประมาณการที่นัด)</label>
-                                                <input class="form-control" type="time" name="app_time" value="" disabled>
+                                                <input class="form-control text-center" type="text" name="app_time" value="{{appointment.app_time}}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -45,14 +46,14 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Create Date (วันที่สร้างการนัด)</label>
-                                                <input class="form-control" type="text" name="create_date" value="" disabled>
+                                                <input class="form-control text-center" type="text" name="create_date" value="{{appointment.create_date}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Next Date (วันที่นัดในครั้งถัดไป)</label>
-                                                <input style="width:100%;" value=""
-                                                class="form-control   mx-auto" type="date" name="next_date" disabled>
+                                                <input style="width:100%;"
+                                                class="form-control text-center mx-auto" type="text" name="next_date" value="{{appointment.next_date}}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +61,7 @@
                                         <div class="col mb-3">
                                             <div class="form-group">
                                                 <label>Reason (เหตุที่นัด)</label>
-                                                <textarea class="form-control " rows="2" name="reason" disabled></textarea>
+                                                <input class="form-control text-center "name="reason" value="{{appointment.reason}}" disabled>
                                             </div>
                                         </div>
                                     </div>

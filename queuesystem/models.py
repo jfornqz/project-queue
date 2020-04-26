@@ -5,11 +5,12 @@ from authen.models import Patient, Medical_Personal
 class Queue_System(models.Model):
     queue_id = models.IntegerField(primary_key=True)
     queue_no = models.IntegerField()
-    time = models.TimeField(auto_now=False)
-    date = models.DateField(auto_now=False)
+    time = models.TimeField(auto_now=True)
+    date = models.DateField(auto_now=True)
     status = models.BooleanField(null=False)
+    create_by = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     
-class Appoinment(models.Model):
+class Appointment(models.Model):
     app_id = models.IntegerField(primary_key=True)
     reason = models.CharField(max_length=255)     
     create_date = models.DateField(auto_now=True)
