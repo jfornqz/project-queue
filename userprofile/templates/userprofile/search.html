@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+
+  .navnav{
+  background-color:#D65D20; 
+  width: 100%;
+
+}
+
+</style>
+
 <div class="container ">
     <div class="row mt-5">
         <div class="col mt-5">
 
-            {% comment %} <form role="form" method="POST" action="{% url 'search' %}">
+            <form role="form" method="POST" action="{% url 'search' %}">
                 {% csrf_token %}
+                 {{ filter.form.as_p }}
                 <div class="row">
                     <div class="col-10 ml-2">
                         <input class="form-control col-12 d-block" type="text" name='search' id="search" placeholder="ค้นหารายชื่อผู้ป่วย">
@@ -14,15 +25,9 @@
                     </div>
                     <input type="submit" value="search" class="btn btn-info btn-block col-1 h-75" id='seach_bt'> 
                 </div>
-			</form>{% endcomment %}
-            <form method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                    <div class="row">
-                        {{ filter.form.as_p }}
-                    </div>
-                    <button class="btn btn-info btn-block col-12 h-100" id='seach_bt' type="submit">Search</button>
-            </form>
-            {% comment %} <small style="color: red;">*** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อผู้ป่วยเท่านั้น ***</small> {% endcomment %}
+			</form>
+
+            
             <br>
             <br>
 
@@ -31,7 +36,7 @@
             
                 {% for user in filter.qs %}
                 <div class="text-left">
-                    <a href="{% url 'editprofile' user.id %}">
+                    <a href="{% url 'patientprofile' user.id %}">
                     <button type="button" class="list-group-item list-group-item-action">
                         <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ user.id }}: </font> &nbsp;&nbsp;{{ user.get_full_name }}
                     </button>

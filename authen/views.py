@@ -6,7 +6,8 @@ from datetime import date, datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group, User
 from .models import Medical_Personal, Patient
 
 
@@ -31,6 +32,7 @@ def my_login(request):
 def my_logout(request):
     logout(request)
     return redirect('login')
+
 
 def my_register(request):
     logout(request)
@@ -90,11 +92,13 @@ def my_register(request):
 
     return render(request, 'authen/register.html', context)
 
+@permission_required('userprofile.delete_medical_history')
 def register_med(request):
     context = {}
     return render(request, 'authen/register_medicalpersonnel.html', context)
 
-
+@login_required
+@permission_required('userprofile.add_medical_history')
 def changepassword(request):
     context = {}
     return render(request, 'authen/changepassword.html', context)
