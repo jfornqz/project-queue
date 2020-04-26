@@ -100,9 +100,6 @@ def search(request):
 
 
 
-
-
-
 @login_required
 @permission_required('userprofile.add_medical_history')
 def admittedpatienthistory(request, num):
@@ -133,18 +130,27 @@ def admittedpatienthistory(request, num):
 @login_required
 @permission_required('userprofile.add_medical_history')
 def search_foradmitted(request):
-    search = request.POST.get('search', '')
-    first_name_patient = User.objects.filter(first_name__icontains=search)
-    id_patient = User.objects.filter(id__icontains=search)
-    result = zip(id_patient, first_name_patient)
-    # if id_patient.exists():
-    #    result = zip(id_patient, first_name_patient)
+    Keep_patient = User.objects.filter(groups__name='Patient')
     context = {
-        'firstname_patient' : first_name_patient,
-        'id_patient' : id_patient,
-        'result' : result,
-        'search' : search,
-
-
+        'pt': Keep_patient,
+        'check': 1
     }
+
+    if request.method == 'POST':
+        search = request.POST['search']
+        if search:
+            match = User.objects.filter(Q(id__icontains=search)|
+                                        Q(first_name__icontains=search)|
+                                        Q(last_name__icontains=search),
+                                        groups__name='Patient'
+                                        )
+
+            if match:
+                context = {
+                    'match': match
+                }
+                return render(request, 'userprofile/searchforadmitted.html', context)
+            else:
+                messages.error(request, 'No Patient found')
+
     return render(request, 'userprofile/searchforadmitted.html', context)

@@ -14,55 +14,59 @@
 <div class="container ">
     <div class="row mt-5">
         <div class="col mt-5">
-            <form action="{% url 'search_foradmitted' %}" method="POST">
+
+            <form role="form" method="POST" action="{% url 'search_foradmitted' %}">
                 {% csrf_token %}
-            <div class="row">
-                    <div class="col-1 text-right mr-1"> <i><img src="/static/image/search.png"></img></i></div>
-                    <div class="col-10 ml-2"><input class="form-control col-12 d-block " type="text"
-                            placeholder="ค้นหารายชื่อผู้ป่วย">
-                        <small style="color: red;">** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อผู้ป่วยเท่านั้น</small>
+
+                <div class="row">
+                    <div class="col-10 ml-2">
+                        <input class="form-control col-12 d-block" type="text" name='search' placeholder="ค้นหาไอดีผู้ป่วย">
+                        <small style="color: red;">*** ค้นหาได้เฉพาะรหัสประจำตัวผู้ป่วยหรือชื่อ-นามสกุลผู้ป่วยเท่านั้น ***</small>
                     </div>
-
-            </div>
+                    <input type="submit" value="search" class="btn btn-info btn-block col-1 h-75" id='seach_bt'> 
+                </div>
             </form>
+        
             <br>
-
-
-            {% if search %}
+            <br>
             <div class="list-group col-12  mx-auto d-block">
-                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะ
-                    รหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
-                {% for id, user in result %}
-                <div class="text-left">
-                    <button type="button" class="list-group-item list-group-item-action">
-                        <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{id.id}}</font>&nbsp;&nbsp;{{user.first_name}}&nbsp;{{user.last_name}}
-                    </button>
-                </div>
-                {% endfor %}
+                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะรหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
+
+                {% if match %}
+                    {% for i in match%}
+                    <div class="text-left">
+                        <a href="{% url 'patientprofile' i.id %}">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ i.id }}: </font> &nbsp;&nbsp;{{ i.first_name }}&nbsp;{{ i.last_name }}
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% elif messages %}
+
+                    <div class="text-center">
+                        <button type="button" class="list-group-item list-group-item-action" disabled>
+                            {% for k in messages %}
+                                <font style="color: red;">{{ k }}</font>
+                            {% endfor %}
+                        </button>
+                    </div>
+                {% elif check %}
+                    {% for i in pt %}
+                    <div class="text-left">
+                        <a href="{% url 'patientprofile' i.id %}">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ i.id }}: </font> &nbsp;&nbsp;{{ i.first_name }}&nbsp;{{ i.last_name }}
+                        </button>
+                    </div>
+                    {% endfor %}
+            
+                    
+                {% endif %}
+                
             </div>
+            </div>
+            <br>
         </div>
     </div>
 </div>
-
-            {% else %}
-            <div class="list-group col-12  mx-auto d-block">
-                <button type="button" class="list-group-item list-group-item-action" disabled>แสดงเฉพาะ
-                    รหัสประจำตัวผู้ป่วย ชื่อ - นามสกุล</button>
-                 {% for id, user in result %}
-                <div class="text-left">
-                    <a href="{% url 'admittedpatienthistory' user.id %}">
-                    <button type="button" class="list-group-item list-group-item-action">
-                        <font style="color: #2078D6;">รหัสประจำตัวผู้ป่วย {{id.id}}</font>&nbsp;&nbsp;{{user.first_name}}&nbsp;{{user.last_name}}
-                    </button>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-{% endif%}
-
-
-
 {% endblock content %}
