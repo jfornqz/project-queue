@@ -4,7 +4,7 @@ from venv import create
 from datetime import date, datetime
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect, render
 
 from .models import Medical_Personal, Patient
@@ -38,13 +38,18 @@ def my_register(request):
     msg = ''
     if request.method == 'POST':
         if request.POST.get('password1') == request.POST.get('password2'):
+            get_group = request.POST.get('group')
             user = User.objects.create_user(
                 request.POST.get('username'),
                 request.POST.get('email'),
                 request.POST.get('password1')
+                
             )
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
+            group = Group.objects.get(name=get_group)
+            user.groups.add(group)
+            
             user.save()
 
             today = datetime.today()
@@ -60,8 +65,10 @@ def my_register(request):
                         address=request.POST.get('address'),
                         phone=request.POST.get('phone'),
                         account_id=user,
-                        picture=None
+                        picture=None,
                     )
+                    
+
                     if request.POST.get('name_title') == 'นาย' or request.POST.get('name_title') == 'เด็กชาย':
                         patient.gender = 'ชาย'
                     else:
