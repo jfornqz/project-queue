@@ -23,8 +23,10 @@ def patientprofile(request, num):
 # Create your views here.
 @login_required
 def editprofile(request):
-    # user = 
-    # patient = Patient.objects.get(account_id_id=id)
+    user = request.user
+    patient = user.patient
+    print(user.first_name)
+    print(user.patient.phone)
     context = {
                 'user': user,
                 'patient': patient
@@ -57,9 +59,6 @@ def editprofile(request):
         else:
             context.update({'msgg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
 
-    elif request.method == 'POST' and 'savepicture' in request.POST:
-        patient.picture = request.FILES['picture']
-        patient.save()
     return render(request, 'userprofile/editprofile.html', context)
 
 # def search(request):

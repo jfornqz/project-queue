@@ -2,11 +2,6 @@
 {% block content %}
 <!--  -->
 <style>
-  input[type="file"] {
-    display: none;
-
-  }
-
   .navnav{
   background-color:#D65D20; 
   width: 100%;
@@ -61,18 +56,6 @@
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
                     <!-- ดึงชื่อ - นามสกุล -->
                     <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.first_name}}&nbsp;{{user.last_name}}</h4>
-                    <div class="mt-2">
-                      <!-- form สำหรับเปลี่ยนรูปภาพ -->
-                      <form method="POST" action="">
-                        {% csrf_token %}
-                        <label for="file-upload" class="custom-file-upload btn btn-primary">
-                          <img src="/static/image/camera.png" width="13%;"></img>
-                          <span>Change Photo</span>
-                        </label>
-                        <!-- ปุ่มเปลี่ยนรูปภาพ -->
-                        <input id="file-upload" type="file" />
-                        <!-- ** ปุ่มนี้แสดงเฉพาะผู้ป่วย ** -->
-                    </div>
                       
                   </div>
                   <!-- ดึงชื่อ group -->
@@ -175,7 +158,7 @@
                         <div class="col">
                           <div class="form-group">
                             <!-- ฟอร์มเปลี่ยนรหัสผ่าน -->
-                            <form method="POST" action="{% url 'editprofile' user.id %}">
+                            <form method="POST" action="{% url 'editprofile' %}">
                               {% csrf_token %}
                               <label>Current Password</label>
                               <input class="form-control col-lg-5 d-block mx-auto" type="password" name="password">
