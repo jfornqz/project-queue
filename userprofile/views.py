@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms import formset_factory
@@ -6,9 +6,12 @@ from django import forms
 from authen.models import Medical_Personal, Patient
 from .models import admission_note
 from datetime import date, datetime
-from .filters import UserFilter
+
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User
+
+from django.db.models import Q
+from django.contrib import messages
 
 @login_required
 @permission_required('userprofile.add_medical_history')
@@ -70,11 +73,35 @@ def editprofile(request):
 @login_required
 @permission_required('userprofile.add_medical_history')
 def search(request):
-    search = User.objects.all()
-    user_filter = UserFilter(request.POST, queryset=search)
-    print(search)
-    
-    return render(request, 'userprofile/search.html', {'filter': user_filter})
+    Keep_patient = User.objects.filter(groups__name='Patient')
+    context = {
+        'pt': Keep_patient,
+        'check': 1
+    }
+
+    if request.method == 'POST':
+        search = request.POST['search']
+        if search:
+            match = User.objects.filter(Q(id__icontains=search)|
+                                        Q(first_name__icontains=search)|
+                                        Q(last_name__icontains=search),
+                                        groups__name='Patient'
+                                        )
+
+            if match:
+                context = {
+                    'match': match
+                }
+                return render(request, 'userprofile/search.html', context)
+            else:
+                messages.error(request, 'No Patient found')
+
+    return render(request, 'userprofile/search.html', context)
+
+
+
+
+
 
 @login_required
 @permission_required('userprofile.add_medical_history')
