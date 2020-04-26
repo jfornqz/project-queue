@@ -6,8 +6,9 @@ from datetime import date, datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect, render
-
 from .models import Medical_Personal, Patient
+
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
@@ -90,6 +91,8 @@ def my_register(request):
 
     return render(request, 'authen/register.html', context)
 
+@login_required
+@permission_required('userprofile.delete_medical_history')
 def register_med(request):
     context = {}
     return render(request, 'authen/register_medicalpersonnel.html', context)
