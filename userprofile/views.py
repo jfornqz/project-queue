@@ -73,7 +73,8 @@ def editprofile(request):
 @login_required
 @permission_required('userprofile.add_medical_history')
 def search(request):
-    Keep_patient = User.objects.filter(groups__name='Patient')
+    Keep_patient = User.objects.filter(groups__name='Patient').order_by('id')
+
     context = {
         'pt': Keep_patient,
         'check': 1
@@ -86,7 +87,7 @@ def search(request):
                                         Q(first_name__icontains=search)|
                                         Q(last_name__icontains=search),
                                         groups__name='Patient'
-                                        )
+                                        ).order_by('id')
 
             if match:
                 context = {
@@ -130,7 +131,7 @@ def admittedpatienthistory(request, num):
 @login_required
 @permission_required('userprofile.add_medical_history')
 def search_foradmitted(request):
-    Keep_patient = User.objects.filter(groups__name='Patient')
+    Keep_patient = User.objects.filter(groups__name='Patient').order_by('id')
     context = {
         'pt': Keep_patient,
         'check': 1
@@ -143,7 +144,7 @@ def search_foradmitted(request):
                                         Q(first_name__icontains=search)|
                                         Q(last_name__icontains=search),
                                         groups__name='Patient'
-                                        )
+                                        ).order_by('id')
 
             if match:
                 context = {
