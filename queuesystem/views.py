@@ -174,12 +174,14 @@ def main_appointment(request, num):
     patient = Patient.objects.get(account_id_id=user.id)
     appointment = Appointment.objects.get(app_id=num)
     med = Medical_Personal.objects.get(account_id_id=appointment.me_id_id)
-    med_name = med.account_id.first_name
+    med_firstname = med.account_id.first_name
+    med_lastname = med.account_id.last_name
     context = {
                 'user': user,
                 'patient': patient,
                 'appointment' : appointment,
-                'med_name' : med_name
+                'med_firstname' : med_firstname,
+                'med_lastname' : med_lastname
             }
     return render(request, 'queuesystem/mainappointment.html', context)
 

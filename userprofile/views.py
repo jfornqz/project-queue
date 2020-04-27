@@ -121,7 +121,7 @@ def admittedpatienthistory(request, num):
             weight = request.POST.get('weight'),
             height = request.POST.get('height'),
             pressure = request.POST.get('pressure'),
-            drug_allergic = request.POST.get('allergy'),
+            drug_allergic = request.POST.get('drug_allergic'),
             symptoms = request.POST.get('symptoms'),
             patient_id = patient.account_id_id
         )
