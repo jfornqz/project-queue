@@ -5,8 +5,11 @@
 .navnav{
   background-color:#D62020; 
   width: 100%;
-
 }
+
+
+
+</style>
 
 </style>
 
@@ -14,7 +17,7 @@
     <div class="row mt-5">
         <div class="col mt-5">
 
-            <form role="form" method="POST" action="{% url 'search_appointment' %}">
+            <form role="form" method="POST" action="{% url 'search_foradmitted' %}">
                 {% csrf_token %}
 
                 <div class="row">
@@ -34,7 +37,7 @@
                 {% if match %}
                     {% for i in match%}
                     <div class="text-left">
-                        <a href="{% url 'patientprofile' i.id %}">
+                        <a href="{% url 'appointment_create' i.id %}">
                         <button type="button" class="list-group-item list-group-item-action">
                             <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ i.id }}: </font> &nbsp;&nbsp;{{ i.first_name }}&nbsp;{{ i.last_name }}
                         </button>
@@ -52,7 +55,7 @@
                 {% elif check %}
                     {% for i in pt %}
                     <div class="text-left">
-                        <a href="{% url 'patientprofile' i.id %}">
+                        <a href="{% url 'appointment_create' i.id %}">
                         <button type="button" class="list-group-item list-group-item-action">
                             <font style="color: tomato;">รหัสประจำตัวผู้ป่วย {{ i.id }}: </font> &nbsp;&nbsp;{{ i.first_name }}&nbsp;{{ i.last_name }}
                         </button>
