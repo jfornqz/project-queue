@@ -152,9 +152,27 @@
   <div id="undefined-sticky-wrapper" class="sticky-wrapper">
 
     <nav class=" navbar navbar-expand-lg navbar-light fixed-top navnav ">
-      <a class=" navbar-brand " href=" {% url 'index' %}">
+    {% if user.is_superuser %}
+        <a class=" navbar-brand " href=" {% url 'index' %}">
         Queue KMITL Clinic
       </a>
+    {% endif %}
+    {% if not user.is_superuser %}
+      {% if perms.userprofile.add_medical_history%}
+        <a class=" navbar-brand " href=" {% url 'main_medicalpersonnel' %}">
+          Queue KMITL Clinic
+        </a>
+      {% elif perms.queuesystem.add_queue_system %}
+          <a class=" navbar-brand " href=" {% url 'main_patient' %}">
+          Queue KMITL Clinic
+        </a>
+      {% else %}
+          <a class=" navbar-brand " href=" {% url 'index' %}">
+          Queue KMITL Clinic
+        </a>
+      {% endif %}
+    {% endif %}
+    
       <button class="navbar-toggler" type=" button" data-toggle="collapse" data-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -176,7 +194,7 @@
                   </a>
 
                   <div class="dropdown-menu ">
-                    <a class="dropdown-item" href="{% url 'start_queue' %}">Run Queues</a>
+                    <a class="dropdown-item" href="{% url 'run_queue' %}">Run Queues</a>
                     <a class="dropdown-item" href="{% url 'remaining_queue' %}">Remaining Queues</a> </div>
                 </div>
                 <div class="dropdown show d-flex justify-content-center btn-outline-create divider" style="display: block; ">
@@ -188,9 +206,7 @@
                   <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'search_foradmitted' %}">Add Admitted Patient History</a>
                     <a class="dropdown-item" href="{% url 'search_appointment' %}">Create Appointment</a>
-                    <a class="dropdown-item" href="{% url 'search' %}">Patient Profile</a>
-                    <a class="dropdown-item" href="{% url 'search' %}">Medical History</a>
-                    <a class="dropdown-item" href="{% url 'search' %}">Admission Note</a>
+                    <a class="dropdown-item" href="{% url 'search' %}">Medical history</a>
                   </div>
             </div>
             <button onclick="window.location.href = {% url 'changepassword' %}"

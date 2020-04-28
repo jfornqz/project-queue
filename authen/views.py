@@ -30,6 +30,8 @@ def my_login(request):
                 return redirect('main_patient')
             elif group == "Medical_Personnel":
                 return redirect('main_medicalpersonnel')
+            else:
+                return redirect('index')
         else:
             context['error'] = 'Username หรือ Password ไม่ถูกต้อง!'
     return render(request, 'authen/login.html', context)
@@ -105,5 +107,18 @@ def register_med(request):
 @login_required
 @permission_required('userprofile.add_medical_history')
 def changepassword(request):
-    context = {}
-    return render(request, 'authen/changepassword.html', context)
+    user = request.user
+    context = {
+                'user': user,
+        }
+    if request.method == 'POST':
+        if user.check_password(request.POST.get('password')) and request.POST.get('new_password')==request.POST.get('confirm_password'):
+            user.set_password(request.POST.get('new_password'))
+            user.save()
+            user = authenticate(request, username=user.username, password=request.POST.get('new_password'))
+            if user:
+                login(request, user)
+            return redirect('login')
+        else:
+            context['error'] = 'เปลี่ยนรหัสผ่านไม่สำเร็จ กรุณาใส่รหัสผ่านให้ถูกต้อง'
+    return render(request, 'authen/changepassword.html',context=context)

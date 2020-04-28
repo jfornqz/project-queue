@@ -37,15 +37,6 @@ def main_medicalpersonnel(request):
 
 
 # บุคลากรคลินิก เห็นเท่านั้น
-# หน้า start queue > คลิ๊กไปปุ๊ปจะเข้าสู่หน้า run queue
-@login_required
-@permission_required('userprofile.add_medical_history')
-def start_queue(request):
-    context = {}
-    return render(request, 'queuesystem/startqueue.html', context)
-
-
-# บุคลากรคลินิก เห็นเท่านั้น
 # รันคิว
 @login_required
 @permission_required('userprofile.add_medical_history')

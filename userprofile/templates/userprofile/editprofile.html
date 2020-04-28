@@ -66,6 +66,7 @@
                 </form>
                 <!-- จบส่วนของชื่อ - นามสกุล / รูปภาพ / เปลี่ยนรูปภาพ / ชื่อ group -->
                 <p class="text-success font-weight-bold">{{msg}}</p>
+                <p class="text-danger font-weight-bold">{{msgg}}</p>
 
                 <!-- เปิด tap -->
                 <ul class="nav nav-tabs">
@@ -80,7 +81,7 @@
                 <!-- ปิด Tap -->
 
                 <!-- เปิดฟอร์มสำหรับแก้ profile -->
-                <form method="POST" action="">
+                <form method="POST" action="{% url 'editprofile' %}">
                   {% csrf_token %}
                   <div class="tab-content pt-3">
                     <div class="tab-pane fade show active" id="profile">

@@ -12,7 +12,6 @@ urlpatterns = [
     path('generate_queue/',  views.generate_queue, name='generate_queue'),
     path('remaining_queue/',  views.remaining_queue, name='remaining_queue'),
     path('run_queue/',  views.run_queue, name='run_queue'),
-    path('start_queue/',  views.start_queue, name='start_queue'),
     path('main_patient/',  views.main_patient, name='main_patient'),
     path('main_medicalpersonnel/',  views.main_medicalpersonnel, name='main_medicalpersonnel'),
 

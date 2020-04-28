@@ -77,7 +77,7 @@ def editprofile(request):
                 login(request, user)
             context.update({'msg' : 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'})
         else:
-            context.update({'msgg' : 'กรุณากรอกข้อมูลให้ถูกต้อง'})
+            context.update({'msgg' : 'รหัสผ่านไม่ตรงกัน กรุณาใส่รหัสผ่านให้ถูกต้อง'})
 
     elif request.method == 'POST' and 'saveprofile' in request.POST:
         user.first_name = request.POST.get('first_name')
