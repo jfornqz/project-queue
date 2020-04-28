@@ -24,17 +24,18 @@
                                     <h5 class="card-title" style="color: tomato;">รหัสผู้ป่วย :
                                         {{patient.account_id_id}}</h5>
                                     <h5 class="card-title" style="color: tomato;">ชื่อผู้ป่วย :
-                                        &nbsp;</h5>
+                                        {{user.first_name}}&nbsp;{{user.last_name}}</h5>
 
                                     <div class="row mt-5">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Select Doctor ID / name (แพทย์)</label>
                                                     <select class="custom-select required d-block  mx-auto "
-                                                    name="name_title" style="width:auto;" required>
+                                                    name="med_person" style="width:auto;" required>
                                                     <option selected disabled>เลือกแพทย์ที่ให้พบนัด/ Select Doctor ID & name</option>
-                                                    <option value="">01 นายณรงค์ คงกระพัน</option>
-                                                    <option value="">02 นายณรงค์ คงกระพัน</option>
+                                                    {% for i in med_person %}
+                                                    <option value="{{i.id}}">{{i.first_name}}&nbsp;{{i.last_name}}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
@@ -49,7 +50,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Create Date (วันที่สร้างการนัด)</label>
-                                                <input class="form-control" type="text" name="create_date" value="" disabled>
+                                                <input class="form-control" type="text" name="create_date" value="{{today}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -64,7 +65,7 @@
                                         <div class="col mb-3">
                                             <div class="form-group">
                                                 <label>Reason (เหตุที่นัด)</label>
-                                                <textarea class="form-control " rows="2" name="reason"></textarea>
+                                                <input class="form-control " name="reason">
                                             </div>
                                         </div>
                                     </div>

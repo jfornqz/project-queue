@@ -139,10 +139,22 @@ def appointment_check(request):
 def appointment_create(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
+    med_person = User.objects.filter(groups__name='Medical_Personnel')
+    today = date.today()
     context = {
                 'user': user,
-                'patient': patient
+                'patient': patient,
+                'med_person' : med_person,
+                'today' : today
             }
+    if request.method == 'POST':
+        new_obj = Appointment.objects.create(
+            reason = request.POST.get('reason'),
+            next_date = request.POST.get('next_date'),
+            app_time = request.POST.get('app_time'),
+            me_id_id = request.POST.get('med_person'),
+            pt_id_id = user.id
+        )
     return render(request, 'queuesystem/appointmentcreate.html', context)
 
 # บุคลากรคลินิกดูได้เท่านั้น
