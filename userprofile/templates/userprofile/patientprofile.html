@@ -69,7 +69,6 @@
                     <span class="badge badge-secondary">Patient</span>
                   </div>
                 </div>
-                </form>
                 <!-- จบส่วนของชื่อ - นามสกุล / รูปภาพ / เปลี่ยนรูปภาพ / ชื่อ group -->
                 <p class="text-success font-weight-bold">{{msg}}</p>
 
@@ -139,7 +138,7 @@
                             <div class="col mb-3">
                               <div class="form-group">
                                 <label>Address</label>
-                                <textarea class="form-control " rows="3" name="address" disabled>{{patient.address}}</textarea>
+                                <input class="form-control " rows="3" name="address" value="{{patient.address}}" disabled>
                               </div>
                             </div>
                           </div>
@@ -155,7 +154,6 @@
 
                 <!-- เปิด div สำหรับบุคลากร ดู patient profile -->
                 <div class="tab-pane fade" id="patientprofile">
-                  <form class="form">
                     <div class="row">
                       <div class="col">
                         <div class="row">
@@ -207,8 +205,7 @@
                           <div class="col mb-3">
                             <div class="form-group">
                               <label>Address</label>
-                              <textarea class="form-control " rows="3" name="address"
-                                disabled>{{patient.address}}</textarea>
+                              <input class="form-control " rows="3" name="address" value="{{patient.address}}" disabled>
                             </div>
                           </div>
                         </div>
@@ -220,10 +217,10 @@
 
 
                 <!-- เปิดฟอร์มสำหรับแก้ medical history -->
-                <form method="POST" action="{% url 'patientprofile' user.id %}">
-                  {% csrf_token %}
+                
                   <div class="tab-pane fade" id="medicalhistory">
-                    <form class="form">
+                  <form method="POST" action="{% url 'patientprofile' user.id %}">
+                  {% csrf_token %}
                       <div class="row">
                         <div class="col">
                           <div class="row">
@@ -246,13 +243,13 @@
                             <div class="col">
                               <div class="form-group">
                                 <label>Occupation (อาชีพ)</label>
-                                <input class="form-control" type="text" name="occupation">
+                                <input class="form-control" type="text" name="occupation" value="{{m_history.occupation}}">
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-group">
                                 <label>Congenital Disease (โรคประจำตัว)</label>
-                                <input class="form-control" type="text" name="congenital_disease">
+                                <input class="form-control" type="text" name="congenital_disease" value="{{m_history.congenital_disease}}">
                               </div>
                             </div>
                           </div>
@@ -263,13 +260,13 @@
                             <div class="col">
                               <div class="form-group">
                                 <label style="color:red;">First Name</label>
-                                <input class="form-control" type="text" name="fname_emergency" value="">
+                                <input class="form-control" type="text" name="fname_emergency" value="{{m_history.fname_emergency}}">
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-group">
                                 <label style="color:red;">Last name</label>
-                                <input class="form-control" type="text" name="lname_emergency" value="">
+                                <input class="form-control" type="text" name="lname_emergency" value="{{m_history.lname_emergency}}">
                               </div>
                             </div>
                           </div>
@@ -277,13 +274,13 @@
                             <div class="col">
                               <div class="form-group">
                                 <label style="color:red;">Relationship</label>
-                                <input class="form-control" type="text" name="relationship_emergency" value="">
+                                <input class="form-control" type="text" name="relationship_emergency" value="{{m_history.relationship_emergency}}">
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-group">
                                 <label style="color:red;">Phone Number</label>
-                                <input class="form-control" type="text" name="phone_emergency" value="">
+                                <input class="form-control" type="text" name="phone_emergency" value="{{m_history.phone_emergency}}">
                               </div>
                             </div>
                           </div>
@@ -291,7 +288,7 @@
                             <div class="col">
                               <div class="form-group">
                                 <label style="color:red;">Address (ที่อยู่ ที่ติดต่อได้)</label>
-                                <textarea class="form-control " rows="3" name="address_emergency"></textarea>
+                                <input class="form-control " name="address_emergency" value="{{m_history.address_emergency}}">
                               </div>
                             </div>
                           </div>

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django import forms
 from authen.models import Medical_Personal, Patient
-from .models import admission_note
+from .models import admission_note, medical_history
 from datetime import date, datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
@@ -24,7 +24,37 @@ def patientprofile(request, num):
                 'patient': patient,
                 'admit' : admit
             }
-    next_url = request.POST.get('next_url')
+    try:
+        m_history = medical_history.objects.get(account_id_id=num)
+        context.update({'m_history' : m_history})
+        have_mh = True
+    except:
+        have_mh = False
+
+
+    if request.method == 'POST':
+        if have_mh == True:
+            m_history.occupation = request.POST.get('occupation')
+            m_history.congenital_disease = request.POST.get('congenital_disease')
+            m_history.fname_emergency = request.POST.get('fname_emergency')
+            m_history.lname_emergency = request.POST.get('lname_emergency')
+            m_history.address_emergency = request.POST.get('address_emergency')
+            m_history.relationship_emergency = request.POST.get('relationship_emergency')
+            m_history.phone_emergency = request.POST.get('phone_emergency')
+            m_history.save()
+        else:
+            new_obj = medical_history.objects.create(
+                occupation = request.POST.get('occupation'),
+                congenital_disease = request.POST.get('congenital_disease'),
+                fname_emergency = request.POST.get('fname_emergency'),
+                lname_emergency = request.POST.get('lname_emergency'),
+                address_emergency = request.POST.get('address_emergency'),
+                relationship_emergency = request.POST.get('relationship_emergency'),
+                phone_emergency = request.POST.get('phone_emergency'),
+                account_id_id = num
+            )
+            context.update({'m_history' : new_obj})
+        context.update({'msg' : 'บันทึกสำเร็จ!!!'})
     return render(request, 'userprofile/patientprofile.html', context)
 
 
@@ -34,8 +64,6 @@ def patientprofile(request, num):
 def editprofile(request):
     user = request.user
     patient = user.patient
-    print(user.first_name)
-    print(user.patient.phone)
     context = {
                 'user': user,
                 'patient': patient

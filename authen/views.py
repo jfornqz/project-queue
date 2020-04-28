@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, auth
 from .models import Medical_Personal, Patient
 
 
@@ -24,7 +24,12 @@ def my_login(request):
 
         if user: 
             login(request, user)
-            return redirect('index')
+            group = request.user.groups.values_list('name', flat=True).first()
+            print(group)
+            if group == "Patient":
+                return redirect('main_patient')
+            elif group == "Medical_Personnel":
+                return redirect('main_medicalpersonnel')
         else:
             context['error'] = 'Username หรือ Password ไม่ถูกต้อง!'
     return render(request, 'authen/login.html', context)
@@ -65,10 +70,10 @@ def my_register(request):
                         dob=request.POST.get('dob'),
                         gender='',
                         age=0,
+                        blood_type=request.POST.get('blood_type'),
                         address=request.POST.get('address'),
                         phone=request.POST.get('phone'),
                         account_id=user,
-                        picture=None,
                     )
                     
 

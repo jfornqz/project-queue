@@ -67,6 +67,32 @@ def remaining_queue(request):
 @permission_required('queuesystem.add_queue_system')
 def before_generatequeue(request):
     context = {}
+    med_person = User.objects.filter(groups__name='Medical_Personnel')
+    context = {
+        'med_person' : med_person
+    }
+    user = request.user
+    today = datetime.today()
+    queue = Queue_System.objects.filter(date=today)
+    amount = queue.count()
+    latest = queue.filter(create_by_id=user.id, status=0)
+    next_queue = amount+1
+    if request.method == 'POST':
+        if latest.count() == 0:
+            if request.POST.get('type') == "มีนัด":
+                my_queue = Queue_System.objects.create(
+                    queue_no = next_queue,
+                    status = False,
+                    create_by_id = user.id,
+                    doctor_id = request.POST.get('med_id')
+                )
+            else:
+                my_queue = Queue_System.objects.create(
+                    queue_no = next_queue,
+                    status = False,
+                    create_by_id = user.id
+                )
+        return redirect('generate_queue')
     return render(request, 'queuesystem/before_generatequeue.html', context)
 
 
@@ -82,19 +108,9 @@ def generate_queue(request):
     amount = queue.count()
     latest = queue.filter(create_by_id=user.id, status=0)
     next_queue = amount+1
-    if latest:
-        context = {
-            'my_queue' : latest.get(create_by_id=user.id, status=0),
-        }
-    else:
-        my_queue = Queue_System.objects.create(
-            queue_no = next_queue,
-            status = False,
-            create_by_id = user.id
-        )
-        context = {
-            'my_queue' : my_queue,
-        }
+    context = {
+        'my_queue' : latest.get(create_by_id=user.id, status=0)
+    }
     return render(request, 'queuesystem/generatequeue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
@@ -119,7 +135,10 @@ def appointment_check(request):
             'name_list' : name_list,
             'my_list' : my_list
             })
-        print(name_list)
+    else:
+        context.update({
+            'none_data': 'ไม่มีการนัดหมาย'
+        })
     return render(request, 'queuesystem/appointmentcheck.html', context)
 
 # บุคลากรคลินิกเห็นเท่านั้น

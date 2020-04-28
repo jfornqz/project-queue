@@ -9,7 +9,8 @@ class Queue_System(models.Model):
     date = models.DateField(auto_now=True)
     status = models.BooleanField(null=False)
     create_by = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
-    
+    doctor = models.ForeignKey(Medical_Personal, on_delete=models.CASCADE, null=True)
+
 class Appointment(models.Model):
     app_id = models.IntegerField(primary_key=True)
     reason = models.CharField(max_length=255)     

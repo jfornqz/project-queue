@@ -36,7 +36,8 @@
 
     }
 </style>
-<form action="{% url 'generate_queue' %}" method="POST">
+{% comment %} <form action="{% url 'generate_queue' %}" method="POST"> {% endcomment %}
+<form action="" method="POST">
     {% csrf_token %}
     <div class="container mt-5 ">
         <div class="row flex-lg-nowrap mt-5">
@@ -50,7 +51,7 @@
                                         คุณมีนัดพบแพทย์หรือไม่
                                         <select name="type" id="type" class=" form-control d-block mx-auto mt-1"
                                             style="margin-left:57px; width:153px;">
-                                            <option name="มีนัด" value="ไม่มีนัด">ไม่มีนัด</option>
+                                            <option name="ไม่มีนัด" value="ไม่มีนัด">ไม่มีนัด</option>
                                             <option name="มีนัด" value="มีนัด">มีนัด</option>
                                         </select>
                                     </div>
@@ -58,9 +59,12 @@
                                     <div class="row mx-auto justify-content-center mt-3" id="row_dim">
                                         กรุณาเลือกชื่อของแพทย์จากในใบนัดของคุณ</div>
                                     <div class="row" id="row_show">
-                                        <select class="form-control d-block mx-auto mt-1"
-                                            style="margin-left:57px; width:153px;">
-                                            <option name="d1" value="d1">หมอ ก</option>
+                                        <select class="form-control d-block mx-auto mt-1" name="med_id"
+                                            style="margin-left:30px; width:170px;">
+                                            <option selected disabled>-กรุณาเลือกหมอ-</option>
+                                            {% for i in med_person %}
+                                                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                                            {% endfor %}
                                         </select>
 
                                     </div>

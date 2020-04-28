@@ -20,6 +20,10 @@
                 </button>
 
             </div>
+            {% if none_data %}
+            <br>
+            <p class="text-danger">{{none_data}}</p>
+            {% else %}
             {% for i,j in my_list %} 
             <div class="list-group col-12 d-block text-left">
                 <a href="{% url 'main_appointment' i.app_id %}">
@@ -30,7 +34,8 @@
                     </button>
                 </a>
             </div>
-            {% endfor %} 
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
