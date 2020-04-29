@@ -158,12 +158,30 @@
         td_status = document.createElement('td')
         td_status.innerText = data.status
         td_status.setAttribute('id', data.queue_id)
+        if (data.status == 'finished'){
+            td_status.setAttribute('class', 'text-success')
+        }
+        else if (data.status == 'called'){
+            td_status.setAttribute('class', 'text-warning')
+        }
+        else if (data.status == 'waiting'){
+            td_status.setAttribute('class', 'text-danger')
+        }
         tr.append(td_status)
 
         td = document.createElement('td')
         button = document.createElement('button')
         button.setAttribute('class', 'btn btn-success text-uppercase')
-        button.innerHTML = '&nbsp;เรียกคิว&nbsp;'
+        button.setAttribute('id', 'button'+data.queue_id)
+        if (data.status == 'finished'){
+            button.innerHTML = '&nbsp;ตรวจแล้ว&nbsp;'
+        }
+        else if (data.status == 'called'){
+            button.innerHTML = '&nbsp;เสร็จสิ้น&nbsp;'
+        }
+        else if (data.status == 'waiting'){
+            button.innerHTML = '&nbsp;เรียกคิว&nbsp;'
+        }
         button.addEventListener('click', function(){
             axios.post('/run_queue_api/', {
                 queue : data
@@ -172,11 +190,22 @@
                 console.log(response.data.queue_id)
 
                 status = response.data.status
-                document.getElementById(response.data.queue_id).innerText = status
-
-                if (status == 'called'){
+                
+                
+                if (status == 'finished'){
+                    document.getElementById(data.queue_id).setAttribute('class', 'text-success')
+                    document.getElementById('button'+data.queue_id).innerText = ' ตรวจแล้ว '
+                }
+                else if (status == 'called'){
+                    document.getElementById(data.queue_id).setAttribute('class', 'text-warning')
+                    document.getElementById('button'+data.queue_id).innerText = ' เสร็จสิ้น '
                     document.getElementById('queue_number').innerText = response.data.queue_no
                 }
+                else if (status == 'waiting'){
+                    document.getElementById(data.queue_id).setAttribute('class', 'text-danger')
+                    document.getElementById('button'+data.queue_id).innerText = ' เรียกคิว '
+                }
+                document.getElementById(response.data.queue_id).innerText = status
             })
             .catch(function(error){
                 console.log(error)

@@ -112,7 +112,7 @@ def register_med(request):
     form = MedicalPersonalForm()
     if request.method == 'POST':
         if request.POST.get('password1') == request.POST.get('password2'):
-            pt = 'Medical_Personnel'
+            mp = 'Medical_Personnel'
             user = User.objects.create_user(
                 request.POST.get('username'),
                 request.POST.get('email'),

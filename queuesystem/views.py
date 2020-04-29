@@ -33,13 +33,12 @@ def main_patient(request):
     context = {}
     user = request.user
     try:
-        my_queue = Queue_System.objects.get(create_by_id=user.id, status=0)
+        my_queue = Queue_System.objects.get(create_by_id=user.id, status='waiting')
         context.update({
             'my_queue' : my_queue
         })
         try:
             doctor = User.objects.get(pk=my_queue.doctor_id)
-            print(doctor.first_name)
             context.update({'doctor' : doctor})
         except:
             pass
@@ -94,8 +93,6 @@ def run_queue(request):
     queue = Queue_System.objects.filter(date=today)
     patient = User.objects.filter(groups__name='Patient')
     doctor = User.objects.filter(groups__name='Medical_Personnel')
-    for i in doctor:
-        print(i.first_name)
     context.update({
         'queue' : queue,
         'patient' : patient,
@@ -120,8 +117,6 @@ def before_generatequeue(request):
     context = {}
     med_person = User.objects.filter(groups__name='Medical_Personnel')
     doctor = Medical_Personal.objects.filter(position='แพทย์')
-    print(med_person)
-    print(doctor)
     context = {
         'med_person' : med_person,
         'doctor' : doctor,
@@ -144,7 +139,7 @@ def before_generatequeue(request):
             else:
                 my_queue = Queue_System.objects.create(
                     queue_no = next_queue,
-                    status = False,
+                    status = 'waiting',
                     create_by_id = user.id
                 )
         return redirect('generate_queue')
@@ -182,7 +177,7 @@ def appointment_check(request):
     if appointment:
         for i in appointment:
             med = Medical_Personal.objects.get(account_id_id=i.me_id_id)
-            med_name = med.account_id.first_name
+            med_name = med.account_id.first_name+' '+med.account_id.last_name
             name_list.append(med_name)
         my_list = zip(appointment, name_list)
         context.update({

@@ -154,6 +154,7 @@ def admittedpatienthistory(request, num):
             symptoms = request.POST.get('symptoms'),
             patient_id = patient.account_id_id
         )
+        return redirect('patientprofile', num)
     return render(request, 'userprofile/admittedpatienthistorycreate.html', context)
 
 @login_required
