@@ -99,14 +99,14 @@ def before_generatequeue(request):
     today = datetime.today()
     queue = Queue_System.objects.filter(date=today)
     amount = queue.count()
-    latest = queue.filter(create_by_id=user.id, status=0)
+    latest = queue.filter(create_by_id=user.id, status='waiting')
     next_queue = amount+1
     if request.method == 'POST':
         if latest.count() == 0:
             if request.POST.get('type') == "มีนัด":
                 my_queue = Queue_System.objects.create(
                     queue_no = next_queue,
-                    status = False,
+                    status = 'waiting',
                     create_by_id = user.id,
                     doctor_id = request.POST.get('med_id')
                 )
@@ -130,10 +130,10 @@ def generate_queue(request):
     today = datetime.today()
     queue = Queue_System.objects.filter(date=today)
     amount = queue.count()
-    latest = queue.filter(create_by_id=user.id, status=0)
+    latest = queue.filter(create_by_id=user.id, status='waiting')
     next_queue = amount+1
     context = {
-        'my_queue' : latest.get(create_by_id=user.id, status=0)
+        'my_queue' : latest.get(create_by_id=user.id, status='waiting')
     }
     return render(request, 'queuesystem/generatequeue.html', context)
 

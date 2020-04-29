@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-sm-3 mx-auto">
                 <h1 class=" text-black" style="font-size: 1.7em; ">หมายเลขคิวปัจจุบันคือ</h1>
-                <h1 class="text-black" style="font-size: 10vw; ">1 </h1>
+                <h1 class="text-black" style="font-size: 10vw; ">2 </h1>
                 <p>
                     วันที่ : วันนี้
                 </p>
@@ -74,8 +74,10 @@
                                 {% endfor %}
                             </td>
                             <td >
-                                {% if i.status == 0 %}                             
-                                    <p class="text-warning" style="text-align: center;">waiting</p>
+                                {% if i.status == 'waiting' %}                             
+                                    <p class="text-danger" style="text-align: center;">Waiting</p>
+                                {% elif i.status == 'called' %}
+                                    <p class="text-warning" style="text-align: center;">Called</p>
                                 {% else %}
                                     <p class="text-success" style="text-align: center;">Finished</p>
                                 {% endif %}
