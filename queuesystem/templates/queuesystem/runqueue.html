@@ -49,64 +49,45 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for i in queue %}
                         <tr>
-                            <th scope="row">1</th>
-                            <td >สมมติคนที่ 1</td>
+                            <th scope="row">{{i.queue_no}}</th>
                             <td>
-                                <input type="radio" name="1" value="มีนัด" checked  >                                <label>มีนัด</label><br>
-                                <input type="radio" name="1" value="ไม่มีนัด"  disabled>
-                                <label>ไม่มีนัด</label>
+                                {% for j in patient %}
+                                    {% if j.id == i.create_by_id %}
+                                        {{j.first_name}} {{j.last_name}}
+                                    {% endif %}
+                                {% endfor %}
                             </td>
-                            <td>นายณรงค์ คงกระพัน</td>
+                            <td>
+                                {% if i.doctor_id %}                             
+                                    <label>มีนัด</label>
+                                {% else %}
+                                    <label>ไม่มีนัด</label>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% for j in doctor %}
+                                    {% if j.id == i.doctor_id %}
+                                        {{j.first_name}} {{j.last_name}}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                             <td >
-                                <p style="text-align: center;">waiting</p>
+                                {% if i.status == 0 %}                             
+                                    <p class="text-warning" style="text-align: center;">waiting</p>
+                                {% else %}
+                                    <p class="text-success" style="text-align: center;">Finished</p>
+                                {% endif %}
+                                
                             </td>
                             <td style="text-align: center;">
-                                <button type="submit"
-                                    class="btn btn-success text-uppercase ">&nbsp;เรียกคิว&nbsp;</button>
+                                <form action="" method="POST">
+                                    <button type="submit" class="btn btn-success text-uppercase" name="">&nbsp;เรียกคิว&nbsp;</button>
+                                </form>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>สมมติคนที่ 2</td>
-                            <td>
-                                <input type="radio" name="2" value="มีนัด"  disabled>
-                                <label>มีนัด</label><br>
-                                <input type="radio" name="2" value="ไม่มีนัด" checked  >
-                                <label>ไม่มีนัด</label>
-                            </td>
-                            <td>-</td>
-                            <td>
-                                <p style="text-align: center;">waiting</p>
-                            </td>
-                            <td style="text-align: center;">
-                                <button type="submit" class="btn btn-success ">&nbsp;เรียกคิว&nbsp;</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>สมมติคนที่ 3</td>
-                            <td>
-                                <input type="radio" name="3" value="มีนัด"  disabled>
-                                <label>มีนัด</label><br>
-                                <input type="radio" name="3" value="ไม่มีนัด" checked >
-                                <label>ไม่มีนัด</label>
-                            </td>
-                            <td>-</td>
-                            <td>
-                                <p style="text-align: center;">waiting</p>
-                            </td>
-                            <td style="text-align: center;">
-                                <button type="submit"
-                                    class="btn btn-success text-uppercase mx-auto">&nbsp;เรียกคิว&nbsp;</button>
-                            </td>
-
-
-                        </tr>
-
-                        
-
-
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

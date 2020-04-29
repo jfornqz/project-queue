@@ -30,12 +30,15 @@
 						</div>
 					</div>
 						<div class="row">
-							<div class="col  single-blog text-right">
-								<h3 style="color: darkslategray;">หมายเลขคิวของคุณคือ</h3>
-								<h4 style="font-size: 5rem;">{{my_queue.queue_no}}</h4>
-								<h4 style="color: darkslategray;">มีนัดพบแพทย์ : นายณรงค์ คงกระพัน</h4>
-							</div>
-
+							{% if my_queue %}
+								<div class="col  single-blog text-right">
+									<h3 style="color: darkslategray;">หมายเลขคิวของคุณคือ</h3>
+									<h4 style="font-size: 5rem;">{{my_queue.queue_no}}</h4>
+									{% if doctor %}
+									<h4 style="color: darkslategray;">มีนัดพบแพทย์ : {{doctor.first_name}} {{doctor.last_name}}</h4>
+									{% endif %}
+								</div>
+							{% endif %}
 						</div>
 						
 				

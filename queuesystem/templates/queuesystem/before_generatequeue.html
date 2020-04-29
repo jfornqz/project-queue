@@ -63,7 +63,11 @@
                                             style="margin-left:30px; width:170px;">
                                             <option selected disabled>-กรุณาเลือกหมอ-</option>
                                             {% for i in med_person %}
-                                                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                                                {% for j in doctor %}
+                                                    {% if i.id == j.account_id_id %}
+                                                        <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
                                             {% endfor %}
                                         </select>
 

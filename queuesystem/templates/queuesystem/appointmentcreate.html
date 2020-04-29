@@ -34,7 +34,11 @@
                                                     name="med_person" style="width:auto;" required>
                                                     <option selected disabled>เลือกแพทย์ที่ให้พบนัด/ Select Doctor ID & name</option>
                                                     {% for i in med_person %}
-                                                    <option value="{{i.id}}">{{i.first_name}}&nbsp;{{i.last_name}}</option>
+                                                        {% for j in doctor %}
+                                                            {% if i.id == j.account_id_id %}
+                                                                <option value="{{i.id}}">{{i.first_name}}&nbsp;{{i.last_name}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     {% endfor %}
                                                 </select>
                                             </div>

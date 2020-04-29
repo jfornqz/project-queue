@@ -25,6 +25,23 @@ def index(request):
 @permission_required('queuesystem.add_queue_system')
 def main_patient(request):
     context = {}
+    user = request.user
+    try:
+        my_queue = Queue_System.objects.get(create_by_id=user.id, status=0)
+        context.update({
+            'my_queue' : my_queue
+        })
+        try:
+            doctor = User.objects.get(pk=my_queue.doctor_id)
+            print(doctor.first_name)
+            context.update({'doctor' : doctor})
+        except:
+            pass
+    except:
+        pass
+    context.update({
+        'user' : user
+    })
     return render(request, 'queuesystem/main_patient.html', context)
 
 # บุคลากรคลินิกเห็นเท่านั้น
@@ -42,6 +59,18 @@ def main_medicalpersonnel(request):
 @permission_required('userprofile.add_medical_history')
 def run_queue(request):
     context = {}
+    today = datetime.today()
+    queue = Queue_System.objects.filter(date=today)
+    patient = User.objects.filter(groups__name='Patient')
+    doctor = User.objects.filter(groups__name='Medical_Personnel')
+    for i in doctor:
+        print(i.first_name)
+    context.update({
+        'queue' : queue,
+        'patient' : patient,
+        'doctor' : doctor
+    })
+
     return render(request, 'queuesystem/runqueue.html', context)
 
 # บุลคากรคลินิก เห็นเท่านั้น
@@ -59,8 +88,10 @@ def remaining_queue(request):
 def before_generatequeue(request):
     context = {}
     med_person = User.objects.filter(groups__name='Medical_Personnel')
+    doctor = Medical_Personal.objects.filter(position='หมอ')
     context = {
-        'med_person' : med_person
+        'med_person' : med_person,
+        'doctor' : doctor,
     }
     user = request.user
     today = datetime.today()
@@ -139,12 +170,14 @@ def appointment_check(request):
 def appointment_create(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
+    doctor = Medical_Personal.objects.filter(position='หมอ')
     med_person = User.objects.filter(groups__name='Medical_Personnel')
     today = date.today()
     context = {
                 'user': user,
                 'patient': patient,
                 'med_person' : med_person,
+                'doctor' : doctor,
                 'today' : today
             }
     if request.method == 'POST':
