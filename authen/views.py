@@ -24,9 +24,12 @@ def my_login(request):
 
         if user: 
             login(request, user)
+            next_url = request.POST.get('next_url')
             group = request.user.groups.values_list('name', flat=True).first()
             print(group)
-            if group == "Patient":
+            if next_url:
+                return redirect(next_url)
+            elif group == "Patient":
                 return redirect('main_patient')
             elif group == "Medical_Personnel":
                 return redirect('main_medicalpersonnel')
@@ -34,7 +37,10 @@ def my_login(request):
                 return redirect('index')
         else:
             context['error'] = 'Username หรือ Password ไม่ถูกต้อง!'
-    return render(request, 'authen/login.html', context)
+    next_url = request.GET.get('next')
+    if next_url:
+        context['next_url'] = next_url
+    return render(request, 'authen/login.html', context=context)
 
 def my_logout(request):
     logout(request)
