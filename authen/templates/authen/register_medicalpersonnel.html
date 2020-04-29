@@ -7,7 +7,7 @@
 
     <div class="row mt-5">
         <div class="col ">
-            <form action="{% url 'register' %}" class="text-center  border border-light p-5" method="POST">
+            <form action="{% url 'register_med' %}" class="text-center  border border-light p-5" method="POST">
                 {% csrf_token %}
                 <h3 class="text-center mb-5">Sign Up for <font style="color:#0076D8;">Medical Personnel</font></h3>
                 {% if error %}<p class="text-danger text-center">{{ error }}</p>{% endif %}
@@ -23,16 +23,21 @@
                         </select>
                 </div>
                 <div class="form-holder mb-2">
-                   
+
                     <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="First Name"  name="first_name" required>
                 </div>
                 <div class="form-holder mb-2">
                     <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="Last Name"  name="last_name" required>
                 </div>
 
-                <div class="form-holder mb-2">
+                <!-- <div class="form-holder mb-2">
                     <input type="text" class="form-control required col-lg-5 d-block mx-auto" placeholder="Job Position"  name="position" required>
+                </div> -->
+
+                <div class="form-holder mb-2">
+                    {{ form }}
                 </div>
+
 
                 <div class="form-holder mb-2">
 

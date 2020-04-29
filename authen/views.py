@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User, auth
 from .models import Medical_Personal, Patient
 
+from .forms import MedicalPersonalForm
+
 
 # Create your views here.
 def my_login(request):
@@ -22,7 +24,7 @@ def my_login(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user: 
+        if user:
             login(request, user)
             next_url = request.POST.get('next_url')
             group = request.user.groups.values_list('name', flat=True).first()
@@ -58,14 +60,14 @@ def my_register(request):
                 request.POST.get('username'),
                 request.POST.get('email'),
                 request.POST.get('password1')
-                
+
             )
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
 
             group = Group.objects.get(name=pt)
             user.groups.add(group)
-            
+
             user.save()
 
             today = datetime.today()
@@ -83,7 +85,7 @@ def my_register(request):
                         phone=request.POST.get('phone'),
                         account_id=user,
                     )
-                    
+
 
                     if request.POST.get('name_title') == 'นาย' or request.POST.get('name_title') == 'เด็กชาย':
                         patient.gender = 'ชาย'
@@ -107,8 +109,43 @@ def my_register(request):
 
 @permission_required('userprofile.delete_medical_history')
 def register_med(request):
-    context = {}
-    return render(request, 'authen/register_medicalpersonnel.html', context)
+    form = MedicalPersonalForm()
+    if request.method == 'POST':
+        if request.POST.get('password1') == request.POST.get('password2'):
+            pt = 'Patient'
+            user = User.objects.create_user(
+                request.POST.get('username'),
+                request.POST.get('email'),
+                request.POST.get('password1')
+
+            )
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+
+            group = Group.objects.get(name=pt)
+            user.groups.add(group)
+
+            user.save()
+            try:
+                form = MedicalPersonalForm(request.POST)
+                if form.is_valid():
+                    med = form.save(commit=False)
+                    med.account_id = user
+                    med.save()
+                    return redirect('index')
+                else:
+                    user.delete()
+                    context['error'] = 'กรอกข้อมูลไม่ถูกต้อง'
+            except:
+                user.delete()
+                context['error'] = 'กรอกข้อมูลไม่ถูกต้อง'
+        else:
+            context['error'] = 'กรุณากรอก Password ให้ตรงกัน'
+    else:
+        user = User.objects.none()
+    return render(request, 'authen/register_medicalpersonnel.html', {
+        'form' : form
+    })
 
 @login_required
 @permission_required('userprofile.add_medical_history')
