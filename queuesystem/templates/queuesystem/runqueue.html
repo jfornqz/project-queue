@@ -74,10 +74,8 @@
                                 {% endfor %}
                             </td>
                             <td >
-                                {% if i.status == 'waiting' %}                             
-                                    <p class="text-danger" style="text-align: center;">Waiting</p>
-                                {% elif i.status == 'called' %}
-                                    <p class="text-warning" style="text-align: center;">Called</p>
+                                {% if i.status == 0 %}                             
+                                    <p class="text-warning" style="text-align: center;">waiting</p>
                                 {% else %}
                                     <p class="text-success" style="text-align: center;">Finished</p>
                                 {% endif %}

@@ -9,7 +9,6 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User, auth
 from .models import Medical_Personal, Patient
-from .forms import UserForm, MedicalPersonForm
 
 
 # Create your views here.
@@ -109,32 +108,6 @@ def my_register(request):
 @permission_required('userprofile.delete_medical_history')
 def register_med(request):
     context = {}
-    mp = 'Medical_Personnel'
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        mp_form = MedicalPersonForm(data=request.POST)
-        if user_form.is_valid() and mp_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            group = Group.objects.get(name=mp)
-            user.groups.add(group)
-            user.save()
-            customer = mp_form.save()
-            customer.user_id = user.id
-            customer.save()
-            
-            return redirect('login')
-        else:
-            print(user_form.errors,mp_form.errors)
-        
-    else:
-        user_form = UserForm()
-        mp_form = MedicalPersonForm()
-    
-    context = {
-        'user_form' : user_form,
-        'mp_form' : mp_form
-    }
     return render(request, 'authen/register_medicalpersonnel.html', context)
 
 @login_required
