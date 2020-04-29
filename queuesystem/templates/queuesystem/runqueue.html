@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-sm-3 mx-auto">
                 <h1 class=" text-black" style="font-size: 1.7em; ">หมายเลขคิวปัจจุบันคือ</h1>
-                <h1 class="text-black" style="font-size: 10vw; ">2 </h1>
+                <h1 class="text-black" style="font-size: 10vw; " id='queue_number'>- </h1>
                 <p>
                     วันที่ : วันนี้
                 </p>
@@ -48,8 +48,8 @@
                             <th scope="col" ></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for i in queue %}
+                    <tbody id='queue'>
+                        <!-- {% for i in queue %}
                         <tr>
                             <th scope="row">{{i.queue_no}}</th>
                             <td>
@@ -60,7 +60,7 @@
                                 {% endfor %}
                             </td>
                             <td>
-                                {% if i.doctor_id %}                             
+                                {% if i.doctor_id %}
                                     <label>มีนัด</label>
                                 {% else %}
                                     <label>ไม่มีนัด</label>
@@ -74,14 +74,14 @@
                                 {% endfor %}
                             </td>
                             <td >
-                                {% if i.status == 'waiting' %}                             
+                                {% if i.status == 'waiting' %}
                                     <p class="text-danger" style="text-align: center;">Waiting</p>
                                 {% elif i.status == 'called' %}
                                     <p class="text-warning" style="text-align: center;">Called</p>
                                 {% else %}
                                     <p class="text-success" style="text-align: center;">Finished</p>
                                 {% endif %}
-                                
+
                             </td>
                             <td style="text-align: center;">
                                 <form action="" method="POST">
@@ -89,7 +89,7 @@
                                 </form>
                             </td>
                         </tr>
-                        {% endfor %}
+                        {% endfor %} -->
                     </tbody>
                 </table>
             </div>
@@ -98,5 +98,98 @@
     </div>
 
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+
+    axios.get('/run_queue_api/')
+        .then(function(response){
+            data = (response.data)
+            console.log(data)
+
+            for (i = 0; i < data.length; i++){
+                createQueue(data[i])
+
+                if (data[i].status == 'called'){
+                    document.getElementById('queue_number').innerText = data[i].queue_no
+                }
+            }
+
+
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+
+    function createQueue(data){
+        let queue = document.getElementById('queue')
+
+        let tr = document.createElement('tr')
+
+        let th = document.createElement('th')
+        th.innerText = data.queue_no
+        tr.append(th)
+
+        let td = document.createElement('td')
+        td.innerText = data.patient_firstname + ' ' + data.patient_lastname
+        tr.append(td)
+
+        if (data.doctor_firstname){
+            td = document.createElement('td')
+            td.innerText = 'มีนัด'
+            tr.append(td)
+
+            td = document.createElement('td')
+            td.innerText = data.doctor_firstname + ' ' + data.doctor_lastname
+            tr.append(td)
+        }
+        else{
+            td = document.createElement('td')
+            td.innerText = 'ไม่มีนัด'
+            tr.append(td)
+
+            td = document.createElement('td')
+            td.innerText = ''
+            tr.append(td)
+        }
+
+        td_status = document.createElement('td')
+        td_status.innerText = data.status
+        td_status.setAttribute('id', data.queue_id)
+        tr.append(td_status)
+
+        td = document.createElement('td')
+        button = document.createElement('button')
+        button.setAttribute('class', 'btn btn-success text-uppercase')
+        button.innerHTML = '&nbsp;เรียกคิว&nbsp;'
+        button.addEventListener('click', function(){
+            axios.post('/run_queue_api/', {
+                queue : data
+            })
+            .then(function(response){
+                console.log(response.data.queue_id)
+
+                status = response.data.status
+                document.getElementById(response.data.queue_id).innerText = status
+
+                if (status == 'called'){
+                    document.getElementById('queue_number').innerText = response.data.queue_no
+                }
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        })
+        td.append(button)
+        tr.append(td)
+
+        queue.append(tr)
+
+    }
+
+
+</script>
 
 {% endblock content %}

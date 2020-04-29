@@ -12,6 +12,12 @@ from datetime import date, datetime
 from django.db.models import Q
 from django.contrib import messages
 
+# API
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+# Serializer
+from .serializers import QueueSystemSerializer
 
 
 # Create your views here.
@@ -52,6 +58,31 @@ def main_medicalpersonnel(request):
     context = {}
     return render(request, 'queuesystem/main_medicalpersonnel.html', context)
 
+
+class RunQueueView(APIView):
+
+    def get(self, request):
+        today = datetime.today()
+        queue = Queue_System.objects.filter(date=today)
+
+        serializer = QueueSystemSerializer(queue, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        data = request.data.get('queue')
+
+        queue = Queue_System.objects.get(queue_id=data['queue_id'])
+
+        if queue.status == 'called':
+            queue.status = 'finished'
+            queue.save()
+        elif queue.status == 'waiting':
+            queue.status = 'called'
+            queue.save()
+
+        serializer = QueueSystemSerializer(queue)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # บุคลากรคลินิก เห็นเท่านั้น
 # รันคิว
@@ -166,7 +197,7 @@ def appointment_check(request):
     return render(request, 'queuesystem/appointmentcheck.html', context)
 
 # บุคลากรคลินิกเห็นเท่านั้น
-# หน้าสร้างการนัด 
+# หน้าสร้างการนัด
 @login_required
 @permission_required('userprofile.add_medical_history')
 def appointment_create(request, num):
