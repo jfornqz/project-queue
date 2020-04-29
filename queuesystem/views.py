@@ -82,13 +82,15 @@ def remaining_queue(request):
     return render(request, 'queuesystem/remainingqueue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
-# หน้าก่อนจะเข้าสู่รับคิว จะต้องเช็คผู้ป่วยก่อน ว่ามีนัดกับหมอหรือไม่
+# หน้าก่อนจะเข้าสู่รับคิว จะต้องเช็คผู้ป่วยก่อน ว่ามีนัดกับแพทย์หรือไม่
 @login_required
 @permission_required('queuesystem.add_queue_system')
 def before_generatequeue(request):
     context = {}
     med_person = User.objects.filter(groups__name='Medical_Personnel')
-    doctor = Medical_Personal.objects.filter(position='หมอ')
+    doctor = Medical_Personal.objects.filter(position='แพทย์')
+    print(med_person)
+    print(doctor)
     context = {
         'med_person' : med_person,
         'doctor' : doctor,
@@ -170,7 +172,7 @@ def appointment_check(request):
 def appointment_create(request, num):
     user = User.objects.get(pk=num)
     patient = Patient.objects.get(account_id_id=num)
-    doctor = Medical_Personal.objects.filter(position='หมอ')
+    doctor = Medical_Personal.objects.filter(position='แพทย์')
     med_person = User.objects.filter(groups__name='Medical_Personnel')
     today = date.today()
     context = {

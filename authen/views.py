@@ -112,7 +112,7 @@ def register_med(request):
     form = MedicalPersonalForm()
     if request.method == 'POST':
         if request.POST.get('password1') == request.POST.get('password2'):
-            pt = 'Patient'
+            pt = 'Medical_Personnel'
             user = User.objects.create_user(
                 request.POST.get('username'),
                 request.POST.get('email'),
@@ -122,7 +122,7 @@ def register_med(request):
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
 
-            group = Group.objects.get(name=pt)
+            group = Group.objects.get(name=mp)
             user.groups.add(group)
 
             user.save()
