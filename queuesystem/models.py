@@ -10,6 +10,8 @@ class Queue_System(models.Model):
     status = models.BooleanField(null=False)
     create_by = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     doctor = models.ForeignKey(Medical_Personal, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return 'Queue_id: ' + str(self.queue_id) + ' by ' + str(self.create_by) 
 
 class Appointment(models.Model):
     app_id = models.IntegerField(primary_key=True)
@@ -19,4 +21,8 @@ class Appointment(models.Model):
     app_time = models.TimeField(auto_now=False)
     pt_id = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     me_id = models.ForeignKey(Medical_Personal, on_delete=models.CASCADE, null=False)
+
+    def __str__(self):
+        return 'Appointment: ' + str(self.app_id) +'  '+ str(self.pt_id)
+
 

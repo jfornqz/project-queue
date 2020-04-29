@@ -12,6 +12,9 @@ class medical_history(models.Model):
     phone_emergency = models.CharField(max_length=10)
     account_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+    def __str__(self):
+        return 'medical_history: '  +' | '+ self.account_id.first_name +'  '+ self.account_id.last_name
+
 class admission_note(models.Model):
     admission_no = models.IntegerField()
     patient_types = models.CharField(max_length=255)
@@ -22,3 +25,6 @@ class admission_note(models.Model):
     symptoms = models.TextField()
     create_date = models.DateField(auto_now=True)
     patient = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'admission_note: ' + str(self.admission_no) +' | '+ str(self.patient)
