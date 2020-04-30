@@ -107,6 +107,17 @@ def run_queue(request):
 @permission_required('userprofile.add_medical_history')
 def remaining_queue(request):
     context = {}
+    today = datetime.today()
+    queue_remain = Queue_System.objects.filter(date=today, status='waiting').count()
+    each_queue = Queue_System.objects.filter(date=today, status='waiting')
+    print(queue_remain)
+    print(type(queue_remain))
+    print(each_queue)
+    print(type(each_queue))
+    context.update({
+        'each_queue' : each_queue,
+        'queue_remain' : queue_remain
+    })
     return render(request, 'queuesystem/remainingqueue.html', context)
 
 # ผู้ป่วยเห็นเท่านั้น
