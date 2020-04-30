@@ -23,12 +23,11 @@ def my_login(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
+        
         if user:
             login(request, user)
             next_url = request.POST.get('next_url')
             group = request.user.groups.values_list('name', flat=True).first()
-            print(group)
             if next_url:
                 return redirect(next_url)
             elif group == "Patient":
