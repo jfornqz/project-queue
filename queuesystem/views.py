@@ -89,16 +89,14 @@ class RunQueueView(APIView):
 @permission_required('userprofile.add_medical_history')
 def run_queue(request):
     context = {}
-    today = date.today()
-
+    today = datetime.today()
     queue = Queue_System.objects.filter(date=today)
     patient = User.objects.filter(groups__name='Patient')
     doctor = User.objects.filter(groups__name='Medical_Personnel')
     context.update({
         'queue' : queue,
         'patient' : patient,
-        'doctor' : doctor,
-        'today' : today
+        'doctor' : doctor
     })
 
     return render(request, 'queuesystem/runqueue.html', context)
@@ -112,11 +110,13 @@ def remaining_queue(request):
     today = datetime.today()
     queue_remain = Queue_System.objects.filter(date=today, status='waiting').count()
     each_queue = Queue_System.objects.filter(date=today, status='waiting')
-    
+    print(queue_remain)
+    print(type(queue_remain))
+    print(each_queue)
+    print(type(each_queue))
     context.update({
         'each_queue' : each_queue,
-        'queue_remain' : queue_remain,
-        
+        'queue_remain' : queue_remain
     })
     return render(request, 'queuesystem/remainingqueue.html', context)
 

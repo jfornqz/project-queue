@@ -158,9 +158,7 @@ def changepassword(request):
         if user.check_password(request.POST.get('password')) and request.POST.get('new_password')==request.POST.get('confirm_password'):
             user.set_password(request.POST.get('new_password'))
             user.save()
-            user = authenticate(request, username=user.username, password=request.POST.get('new_password'))
-            if user:
-                login(request, user)
+            
             return redirect('login')
         else:
             context['error'] = 'เปลี่ยนรหัสผ่านไม่สำเร็จ กรุณาใส่รหัสผ่านให้ถูกต้อง'

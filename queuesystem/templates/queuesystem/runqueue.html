@@ -28,7 +28,10 @@
                 <h1 class=" text-black" style="font-size: 1.7em; ">หมายเลขคิวปัจจุบันคือ</h1>
                 <h1 class="text-black" style="font-size: 10vw; " id='queue_number'>- </h1>
                 <p>
-                    {{ today }}
+                    วันที่ : วันนี้
+                </p>
+                <p>
+                    เวลา : วันนี้
                 </p>
             </div>
 
@@ -171,13 +174,13 @@
         button.setAttribute('class', 'btn btn-success text-uppercase')
         button.setAttribute('id', 'button'+data.queue_id)
         if (data.status == 'finished'){
-            button.innerHTML = '&nbsp;ตรวจแล้ว&nbsp;'
+            button.innerHTML = 'ตรวจแล้ว'
         }
         else if (data.status == 'called'){
-            button.innerHTML = '&nbsp;เสร็จสิ้น&nbsp;'
+            button.innerHTML = 'เสร็จสิ้น'
         }
         else if (data.status == 'waiting'){
-            button.innerHTML = '&nbsp;เรียกคิว&nbsp;'
+            button.innerHTML = 'เรียกคิว'
         }
         button.addEventListener('click', function(){
             axios.post('/run_queue_api/', {
